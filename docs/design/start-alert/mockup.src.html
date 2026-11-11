@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start Alert</title>
+<style>
+@font-face { font-family: Plex; src: url(__FONT_REG__); font-weight: 400; }
+@font-face { font-family: Plex; src: url(__FONT_MED__); font-weight: 500; }
+@font-face { font-family: Plex; src: url(__FONT_SEMI__); font-weight: 600; }
+@font-face { font-family: Plex; src: url(__FONT_BOLD__); font-weight: 700; }
+:root { --bg:#f6f5f2; --fg:#1d1d1b; --muted:#6b6a66; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#161615; --fg:#ecebe7; --muted:#a3a29c; } }
+:root[data-theme="dark"] { --bg:#161615; --fg:#ecebe7; --muted:#a3a29c; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 -apple-system, system-ui, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 28px; margin: 0 0 4px; } p { color: var(--muted); max-width: 72ch; }
+.flow { display:flex; flex-wrap:wrap; gap: 18px; } .step { flex: 0 1 240px; max-width: 240px; }
+.step canvas { display:block; max-width:100%; height:auto; } .step h3 { font-size: 15px; margin: 8px 0 2px; }
+</style>
+</head>
+<body>
+<main>
+<h1>PartnerETA: "Alex started riding"</h1>
+<p>While you're riding and your partner isn't yet, PartnerETA tells you once when they start: a Karoo
+in-ride alert (the Karoo draws it; we give it an icon, a title, a detail and colours). It waits until
+the ETA has settled, so the time in it is worth reading. Once per ride per person, never while you're
+not recording.</p>
+<p><b>When it shows:</b> they've ridden 5 minutes on their route and their ETA has stayed within
+2 minutes for the last 2 minutes (at the latest after 10 minutes, with the ETA as it is then). If they
+were already riding when you started, no alert. Stays 15 seconds, or until you tap it.</p>
+<p><b>Your pick: the finish line.</b> The live link only has their route as a line, no place names.
+<b>A:</b> a street address, looked up once per ride from OpenStreetMap (sends that one point to
+OpenStreetMap's server). <b>B:</b> no lookup, where their finish is from yours.</p>
+<div class="flow">
+  <div class="step"><div id="alert-a"></div><h3>A: with the address</h3></div>
+  <div class="step"><div id="alert-b"></div><h3>B: no lookup</h3></div>
+  <div class="step"><div id="alert-noroute"></div><h3>No route loaded: how far away</h3></div>
+  <div class="step"><div id="settings"></div><h3>Their settings: the switch (on by default)</h3></div>
+</div>
+</main>
+<script>
+/*__KAROO_DEVICE_JS__*/
+const IMGS = "__IMGS__";
+const ICONS = "__ICONS__";
+const FRAME_PNG = '__FRAME__';
+// Export URL: #shot=<id>&theme=light|dark&frame=<k>&frames=<n> (shoot.sh). The page itself shows light.
+const HASH = new URLSearchParams(location.hash.slice(1));
+const SHOT = HASH.get('shot'), THEME = HASH.get('theme') || 'light';
+const FRAME = +(HASH.get('frame') || 0), FRAMES = +(HASH.get('frames') || 1);
+const W = SHOT ? 1100 : 240;
+const BACKDROP = THEME === 'dark' ? 'linear-gradient(#120E0B,#3F342E)' : 'linear-gradient(#7E9CB4,#F1F4F6)';   // Night / Sky
+/*__KIT_JS__*/
+(async () => {
+  await Promise.all([400, 500, 600, 700].map(w => document.fonts.load(`${w} 20px Plex`)));
+  const I = {}; for (const k of Object.keys(IMGS)) I[k] = await loadImg(IMGS[k]);
+  const dev = await KarooDevice.load({ frame: FRAME_PNG, screen: IMGS.status });   // a real Karoo screenshot for the status bar
+  // put(id, draw): draw(c, t) gets t from 0 to 1 across a GIF's frames (0 for a still).
+  const put = (id, draw) => { if (SHOT && id !== SHOT) return;
+    const t = FRAMES > 1 ? FRAME / (FRAMES - 1) : 0;
+    const cv = dev.device(dev.screen({ draw: c => draw(c, t) }), W);
+    if (SHOT) { document.body.innerHTML = ''; document.body.style.cssText = `margin:0;background:${BACKDROP};width:1300px;height:2000px;display:flex;align-items:center;justify-content:center`;
+      cv.style.width = '1100px'; document.body.append(cv); } else document.getElementById(id).append(cv); };
+
+  const pic = name => (THEME === 'dark' && I[name + '_dark']) || I[name];
+  // The Karoo's in-ride alert, drawn after its parts: icon, title, detail, background, text colour.
+  // Their colour's dark tone as the background (Cyan: #0B2E4A), text white, their flag in Cyan.
+  function alert(c, title, lines) {
+    c.drawImage(pic('ride'), 0, 0, 480, 800);
+    const x = 12, y = 62, w = 456, h = 120 + lines.length * 40;
+    c.fillStyle = 'rgba(0,0,0,0.25)'; c.fillRect(0, 50, 480, 750);
+    c.fillStyle = '#0B2E4A'; c.beginPath(); c.roundRect(x, y, w, h, 18); c.fill();
+    // their flag (PartnerETA's glyph) in their colour
+    c.strokeStyle = '#00E5FF'; c.fillStyle = '#00E5FF'; c.lineWidth = 5; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(x + 34, y + 30); c.lineTo(x + 34, y + 86); c.stroke();
+    c.beginPath(); c.moveTo(x + 34, y + 32); c.lineTo(x + 76, y + 44); c.lineTo(x + 34, y + 60); c.closePath(); c.fill();
+    c.fillStyle = '#FFFFFF'; c.font = F(600, 36); c.fillText(title, x + 98, y + 66);
+    c.font = F(400, 29); lines.forEach((l, i) => c.fillText(l, x + 98, y + 118 + i * 40));
+  }
+  put('alert-a', c => alert(c, 'Alex started riding', ['ETA 17:42 · 38.2 km to go', 'Finish: Hornsgatan 12,', 'Södermalm']));
+  put('alert-b', c => alert(c, 'Alex started riding', ['ETA 17:42 · 38.2 km to go', 'Finish: 1.2 km from yours']));
+  put('alert-noroute', c => alert(c, 'Alex started riding', ['No route loaded', '12.4 km away from you']));
+  const form = layout([
+    switchRow('distance', 'Distance left', true), help('Under their time of arrival, how far they still have to ride on their route.'), divider,
+    switchRow('update', 'Start alert', true),
+    help('When you\'re riding and Alex starts, a Karoo alert with their ETA once it has settled (about 5 minutes in). Once per ride.'), divider,
+    heading('target', 'Colour'), swatches(['#00E5FF', '#00D35A', '#1E7BFF', '#FF00E6', '#8A2BE2'], 0), space(200),
+  ]);
+  put('settings', c => page(c, { title: 'Alex', card: null, form, scrollTo: 0 }));
+})();
+</script>
+</body>
+</html>

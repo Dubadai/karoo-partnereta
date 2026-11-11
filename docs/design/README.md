@@ -12,3 +12,4 @@ screenshots are kept out of this public repo: they were made on real rides and s
 | `same-route/` | Same route: gap big (time or distance), ETA small; "Distance left" option in setup |
 | `save-confirmation/` | Save turns green, "Saved ✓" for 3 s, with the link check above it (option A) |
 - [map-squash/](map-squash/): the clock keeps its shape when the Karoo shortens a row on a map page (fitEnd).
+- [start-alert/](start-alert/): an alert when your partner starts riding (mock round 1).
