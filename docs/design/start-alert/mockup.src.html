@@ -23,19 +23,17 @@ h1 { font-size: 28px; margin: 0 0 4px; } p { color: var(--muted); max-width: 72c
 <body>
 <main>
 <h1>PartnerETA: "Alex started riding"</h1>
-<p>While you're riding and your partner isn't yet, PartnerETA tells you once when they start: a Karoo
-in-ride alert (the Karoo draws it; we give it an icon, a title, a detail and colours). It waits until
-the ETA has settled, so the time in it is worth reading. Once per ride per person, never while you're
-not recording.</p>
-<p><b>When it shows:</b> they've ridden 5 minutes on their route and their ETA has stayed within
-2 minutes for the last 2 minutes (at the latest after 10 minutes, with the ETA as it is then). If they
-were already riding when you started, no alert. Stays 15 seconds, or until you tap it.</p>
-<p><b>Your pick: the finish line.</b> The live link only has their route as a line, no place names.
-<b>A:</b> a street address, looked up once per ride from OpenStreetMap (sends that one point to
-OpenStreetMap's server). <b>B:</b> no lookup, where their finish is from yours.</p>
+<p>While you're riding and your partner isn't yet, PartnerETA tells you once when they start: the Karoo's
+own in-ride alert (the Karoo draws it; we give it an icon, a title, a detail and colours). It shows as
+soon as their live link says they're riding, so you know they've left. Their ETA is in the field as
+usual; it settles over the first minutes.</p>
+<p><b>When it shows:</b> you're recording, they weren't riding when you started, and they start. Once
+per ride per person. Stays 15 seconds, or until you dismiss it.</p>
+<p><b>The finish (A, our pick):</b> the street address of their route's end, looked up once per ride
+from OpenStreetMap (sends that one point to OpenStreetMap's server). If the lookup takes longer than
+10 seconds, the alert goes without it.</p>
 <div class="flow">
-  <div class="step"><div id="alert-a"></div><h3>A: with the address</h3></div>
-  <div class="step"><div id="alert-b"></div><h3>B: no lookup</h3></div>
+  <div class="step"><div id="alert-a"></div><h3>With a route: length and finish</h3></div>
   <div class="step"><div id="alert-noroute"></div><h3>No route loaded: how far away</h3></div>
   <div class="step"><div id="settings"></div><h3>Their settings: the switch (on by default)</h3></div>
 </div>
@@ -78,13 +76,12 @@ const BACKDROP = THEME === 'dark' ? 'linear-gradient(#120E0B,#3F342E)' : 'linear
     c.fillStyle = '#FFFFFF'; c.font = F(600, 36); c.fillText(title, x + 98, y + 66);
     c.font = F(400, 29); lines.forEach((l, i) => c.fillText(l, x + 98, y + 118 + i * 40));
   }
-  put('alert-a', c => alert(c, 'Alex started riding', ['ETA 17:42 · 38.2 km to go', 'Finish: Hornsgatan 12,', 'Södermalm']));
-  put('alert-b', c => alert(c, 'Alex started riding', ['ETA 17:42 · 38.2 km to go', 'Finish: 1.2 km from yours']));
+  put('alert-a', c => alert(c, 'Alex started riding', ['38.2 km route', 'Finish: Hornsgatan 12,', 'Södermalm']));
   put('alert-noroute', c => alert(c, 'Alex started riding', ['No route loaded', '12.4 km away from you']));
   const form = layout([
     switchRow('distance', 'Distance left', true), help('Under their time of arrival, how far they still have to ride on their route.'), divider,
     switchRow('update', 'Start alert', true),
-    help('When you\'re riding and Alex starts, a Karoo alert with their ETA once it has settled (about 5 minutes in). Once per ride.'), divider,
+    help('When you\'re riding and Alex starts, a Karoo alert with their route and where it ends. Once per ride.'), divider,
     heading('target', 'Colour'), swatches(['#00E5FF', '#00D35A', '#1E7BFF', '#FF00E6', '#8A2BE2'], 0), space(200),
   ]);
   put('settings', c => page(c, { title: 'Alex', card: null, form, scrollTo: 0 }));
