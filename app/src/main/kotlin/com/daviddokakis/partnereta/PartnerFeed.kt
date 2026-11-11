@@ -15,10 +15,10 @@ import java.time.Instant
 object PartnerFeed {
     fun url(code: String) = "https://dashboard.hammerhead.io/v1/shares/tracking/$code"
 
-    /** The code from a pasted live link ("https://dashboard.hammerhead.io/live/AbCd1234"), or the bare code. */
+    /** The code typed after the box's "live/" ("AbCd1234"), or from a whole link typed in ("…/live/AbCd1234", "live/AbCd1234"). */
     fun codeFrom(input: String): String? {
         val s = input.trim()
-        Regex("""/live/([A-Za-z0-9_-]+)""").find(s)?.let { return it.groupValues[1] }
+        Regex("""(?:^|/)live/([A-Za-z0-9_-]+)""").find(s)?.let { return it.groupValues[1] }
         return s.takeIf { Regex("""[A-Za-z0-9_-]{4,40}""").matches(it) }
     }
 

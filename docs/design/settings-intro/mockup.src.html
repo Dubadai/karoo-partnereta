@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PartnerETA Settings Intro</title>
+<style>
+@font-face { font-family: Plex; src: url(__FONT_REG__); font-weight: 400; }
+@font-face { font-family: Plex; src: url(__FONT_MED__); font-weight: 500; }
+@font-face { font-family: Plex; src: url(__FONT_SEMI__); font-weight: 600; }
+@font-face { font-family: Plex; src: url(__FONT_BOLD__); font-weight: 700; }
+:root { --bg:#f3f5f6; --fg:#1b2026; --muted:#5d6670; --line:#d5dbe0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#15181b; --fg:#e8ecef; --muted:#9ca6b0; --line:#30363c; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg:#15181b; --fg:#e8ecef; --muted:#9ca6b0; --line:#30363c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 -apple-system, system-ui, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1 { font-size: 28px; margin: 0 0 6px; text-wrap: balance; } h2 { font-size: 19px; margin: 0; }
+p { color: var(--muted); max-width: 72ch; margin: 0; }
+section { display: grid; gap: 12px; }
+.flow { display:flex; flex-wrap:wrap; gap: 18px; } .step { flex: 0 1 240px; max-width: 240px; min-width: 0; }
+.step canvas { display:block; max-width:100%; height:auto; } .step h3 { font-size: 14px; font-weight: 600; margin: 8px 0 0; }
+table { border-collapse: collapse; font-size: 14px; width: 100%; } td, th { text-align: left; vertical-align: top; padding: 8px 10px; border-top: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; } .wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>PartnerETA Setup: what a setting does, first</h1>
+<p>New rule: the line that says what a setting does sits right under its heading (or switch row), before its choices, and starts with what it does. This is one person's Setup page, today and after, at three scroll positions. Kit pieces at the code's sizes (karoo-common 1.8.0, Karoo-native colours).</p>
+</header>
+<section>
+<h2>Today</h2>
+<div class="flow">
+  <div class="step"><div id="today-1"></div><h3>Top</h3></div>
+  <div class="step"><div id="today-2"></div><h3>Map colour, Marker</h3></div>
+  <div class="step"><div id="today-3"></div><h3>Their route, On your route, Ride history</h3></div>
+</div>
+</section>
+<section>
+<h2>After</h2>
+<div class="flow">
+  <div class="step"><div id="after-1"></div><h3>Top</h3></div>
+  <div class="step"><div id="after-2"></div><h3>Map colour, Marker</h3></div>
+  <div class="step"><div id="after-3"></div><h3>Their route, On your route, Ride history</h3></div>
+</div>
+</section>
+<section>
+<h2>The texts</h2>
+<div class="wrap"><table>
+<tr><th>Setting</th><th>Today (under the choices)</th><th>After (under the heading)</th></tr>
+<tr><td>Distance left</td><td>Under their time of arrival, how far they still have to ride on their route. On the same route as you, …</td><td>Shows how far they still have to ride, under their time of arrival. On the same route as you, the field shows how far ahead or behind they are, with their ETA under it.</td></tr>
+<tr><td>Map colour</td><td>Cyan · standard. We recommend the standard settings for the best readability on the map.</td><td>Colours their marker and route on your map. The standard settings read best. <em>Under the swatches stays only the picked colour's name: “Cyan · standard”.</em></td></tr>
+<tr><td>Marker</td><td>How they show on your map.</td><td>Shows them on your map as a circle, or as an arrow pointing the way they ride.</td></tr>
+<tr><td>Their route</td><td>Changes with the choice: “Their route on your map…” or “Hide: only their marker…”</td><td>Shows their route on your map, from where they are to where they end. Hidden, only their marker and finish flag show; the ETA still uses their route. <em>One text, so nothing jumps above the choices when you tap.</em></td></tr>
+<tr><td>On your route</td><td>Where they will ride your route too. Arrows show which way they ride; dots are optional.</td><td>Marks where they will ride your route too. Arrows show which way they ride.</td></tr>
+<tr><td>Ride history</td><td>Also draw where they have ridden. Off is recommended: the map stays clearer.</td><td>Draws where they have already ridden. Off is recommended: the map stays clearer.</td></tr>
+</table></div>
+<p>Unchanged: the live link's note stays under the link box (it says where to find the link, not what a setting does), the Remove note stays under its button, and the People list page has no settings to move.</p>
+</section>
+</main>
+<script>
+/*__KAROO_DEVICE_JS__*/
+const IMGS = "__IMGS__";
+const ICONS = "__ICONS__";
+const FRAME_PNG = '__FRAME__';
+const HASH = new URLSearchParams(location.hash.slice(1));
+const SHOT = HASH.get('shot'), THEME = HASH.get('theme') || 'light';
+const FRAME = +(HASH.get('frame') || 0), FRAMES = +(HASH.get('frames') || 1);
+const W = SHOT ? 1100 : 240;
+const BACKDROP = THEME === 'dark' ? 'linear-gradient(#120E0B,#3F342E)' : 'linear-gradient(#7E9CB4,#F1F4F6)';   // Night / Sky
+/*__KIT_JS__*/
+(async () => {
+  await Promise.all([400, 500, 600, 700].map(w => document.fonts.load(`${w} 20px Plex`)));
+  const I = {}; for (const k of Object.keys(IMGS)) I[k] = await loadImg(IMGS[k]);
+  const dev = await KarooDevice.load({ frame: FRAME_PNG, screen: IMGS.status });
+  const put = (id, draw) => { if (SHOT && id !== SHOT) return;
+    const t = FRAMES > 1 ? FRAME / (FRAMES - 1) : 0;
+    const cv = dev.device(dev.screen({ draw: c => draw(c, t) }), W);
+    if (SHOT) { document.body.innerHTML = ''; document.body.style.cssText = `margin:0;background:${BACKDROP};width:1300px;height:2000px;display:flex;align-items:center;justify-content:center`;
+      cv.style.width = '1100px'; document.body.append(cv); } else document.getElementById(id).append(cv); };
+
+  const COLS = ['#00E5FF', '#00D35A', '#1E7BFF', '#FF00E6', '#8A2BE2', '#B6FF00'];
+  const top = [
+    input('Name', 'Alex'), input('Live link', '…/live/AbCd1234'),
+    help('From their Karoo live tracking share (dashboard.hammerhead.io/live/…). They show on your map while they ride.'),
+    status('Link works · not riding now', '#129A5E'), button('tonal', 'Save'), divider,
+  ];
+  // Today, as SetupActivity draws it (karoo-common 1.0.0 help lines, here at 1.8.0 spacing).
+  const today = layout([...top,
+    switchRow('distance', 'Distance left', true),
+    help('Under their time of arrival, how far they still have to ride on their route. On the same route as you, the field shows how far ahead or behind they are, with their ETA under it.'), divider,
+    heading('target', 'Map colour'), swatches(COLS, 0), help('Cyan · standard. We recommend the standard settings for the best readability on the map.'), divider,
+    heading('marker', 'Marker'), seg(['Circle', 'Arrow'], 0), help('How they show on your map.'), divider,
+    heading('flag', 'Their route'), seg(['Show', 'Hide'], 0), help('Their route on your map, from where they are to where they end.'), divider,
+    heading('lap', 'On your route'), seg(['Arrows', 'Dots'], 0), help('Where they will ride your route too. Arrows show which way they ride; dots are optional.'), divider,
+    switchRow('clock', 'Ride history', false), help('Also draw where they have ridden. Off is recommended: the map stays clearer.'), space(40),
+  ]);
+  const after = layout([...top,
+    switchRow('distance', 'Distance left', true),
+    intro('Shows how far they still have to ride, under their time of arrival. On the same route as you, the field shows how far ahead or behind they are, with their ETA under it.'), divider,
+    heading('target', 'Map colour'), intro('Colours their marker and route on your map. The standard settings read best.'), swatches(COLS, 0), help('Cyan · standard'), divider,
+    heading('marker', 'Marker'), intro('Shows them on your map as a circle, or as an arrow pointing the way they ride.'), seg(['Circle', 'Arrow'], 0), divider,
+    heading('flag', 'Their route'), intro('Shows their route on your map, from where they are to where they end. Hidden, only their marker and finish flag show; the ETA still uses their route.'), seg(['Show', 'Hide'], 0), divider,
+    heading('lap', 'On your route'), intro('Marks where they will ride your route too. Arrows show which way they ride.'), seg(['Arrows', 'Dots'], 0), divider,
+    switchRow('clock', 'Ride history', false), intro('Draws where they have already ridden. Off is recommended: the map stays clearer.'), space(40),
+  ]);
+  const field = I.field;
+  const card = field ? { img: field, w: Math.round(206 * field.width / field.height), h: 206 } : null;
+  // Scroll positions: the top of the page; the Map colour heading; the end.
+  const T_COLOUR = 9, A_COLOUR = 9;   // index of the "Map colour" heading (6 top items + switch, line, divider)
+  put('today-1', c => page(c, { title: 'Alex', card, form: today }));
+  put('today-2', c => page(c, { title: 'Alex', card, form: today, scrollTo: T_COLOUR }));
+  put('today-3', c => page(c, { title: 'Alex', card, form: today, scrollTo: 'end' }));
+  put('after-1', c => page(c, { title: 'Alex', card, form: after }));
+  put('after-2', c => page(c, { title: 'Alex', card, form: after, scrollTo: A_COLOUR }));
+  put('after-3', c => page(c, { title: 'Alex', card, form: after, scrollTo: 'end' }));
+})();
+</script>
+</body>
+</html>
