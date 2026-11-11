@@ -35,11 +35,11 @@ object StartAlert {
                 }.onFailure { Timber.w("Finish address lookup failed: ${it.message}") }.getOrNull()
             }
         }
-        val (bg, icon) = look(person.colour)
+        val bg = background(person.colour)
         karoo.dispatch(
             InRideAlert(
                 id = "partnereta-start-${person.slot}",
-                icon = icon,
+                icon = R.drawable.ic_alert_flag,
                 title = context.getString(R.string.alert_started, person.shownName),
                 detail = text(route?.length, view.distanceM, address),
                 autoDismissMs = SHOW_MS,
@@ -50,21 +50,24 @@ object StartAlert {
         Timber.i("Start alert for slot ${person.slot} (route ${route != null}, address ${address != null})")
     }
 
-    /** "38.2 km route / Finish: Hornsgatan 12, Södermalm", or with no route, how far away they are. */
+    /**
+     * "38.2 km route / to Hornsgatan 12", or with no route "No route loaded / 12.4 km away". The Karoo
+     * shows two detail lines of about 17 characters, then "…" (docs/design/start-alert, device shots).
+     */
     fun text(routeM: Double?, distanceM: Double?, address: String?): String =
-        if (routeM != null) listOfNotNull("${km(routeM)} km route", address?.let { "Finish: $it" }).joinToString("\n")
-        else listOfNotNull("No route loaded", distanceM?.let { "${km(it)} km away from you" }).joinToString("\n")
+        if (routeM != null) listOfNotNull("${km(routeM)} km route", address?.let { "to $it" }).joinToString("\n")
+        else listOfNotNull("No route loaded", distanceM?.let { "${km(it)} km away" }).joinToString("\n")
 
     private fun km(m: Double) = String.format(Locale.US, "%.1f", m / 1000)
 
-    /** Their colour's dark tone behind white text, and their flag in their colour. */
-    private fun look(colour: String) = when (colour) {
-        "cyan" -> R.color.alert_bg_cyan to R.drawable.ic_alert_flag_cyan
-        "green" -> R.color.alert_bg_green to R.drawable.ic_alert_flag_green
-        "blue" -> R.color.alert_bg_blue to R.drawable.ic_alert_flag_blue
-        "magenta" -> R.color.alert_bg_magenta to R.drawable.ic_alert_flag_magenta
-        "violet" -> R.color.alert_bg_violet to R.drawable.ic_alert_flag_violet
-        else -> R.color.alert_bg_lime to R.drawable.ic_alert_flag_lime
+    /** Their colour's dark map tone behind white text (the Karoo draws the icon white itself). */
+    private fun background(colour: String) = when (colour) {
+        "cyan" -> R.color.alert_bg_cyan
+        "green" -> R.color.alert_bg_green
+        "blue" -> R.color.alert_bg_blue
+        "magenta" -> R.color.alert_bg_magenta
+        "violet" -> R.color.alert_bg_violet
+        else -> R.color.alert_bg_lime
     }
 }
 
@@ -107,7 +110,7 @@ object FinishAddress {
         return mapOf("User-Agent" to "PartnerETA/$version (Karoo extension; github.com/Dubadai/karoo-partnereta)")
     }
 
-    /** "Hornsgatan 12, Södermalm": street and number, then the area; null when there's no address. */
+    /** "Hornsgatan 12": street and number (the area only when there's no street); null without an address. */
     fun parse(body: String): String? = runCatching {
         val o = Json.parseToJsonElement(body).jsonObject
         val a = o["address"] as? JsonObject ?: return null
@@ -115,6 +118,6 @@ object FinishAddress {
         val street = (s("road") ?: s("pedestrian") ?: s("footway") ?: s("cycleway") ?: s("path"))
             ?.let { r -> s("house_number")?.let { "$r $it" } ?: r }
         val area = s("suburb") ?: s("neighbourhood") ?: s("city_district") ?: s("village") ?: s("town") ?: s("city") ?: s("municipality")
-        listOfNotNull(street, area).distinct().joinToString(", ").ifEmpty { null }
+        street ?: area
     }.getOrNull()
 }

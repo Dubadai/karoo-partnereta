@@ -22,16 +22,17 @@ h1 { font-size: 28px; margin: 0 0 4px; } p { color: var(--muted); max-width: 72c
 </head>
 <body>
 <main>
-<h1>PartnerETA: "Alex started riding"</h1>
+<h1>PartnerETA: "Alex is riding"</h1>
 <p>While you're riding and your partner isn't yet, PartnerETA tells you once when they start: the Karoo's
 own in-ride alert (the Karoo draws it; we give it an icon, a title, a detail and colours). It shows as
 soon as their live link says they're riding, so you know they've left. Their ETA is in the field as
 usual; it settles over the first minutes.</p>
 <p><b>When it shows:</b> you're recording, they weren't riding when you started, and they start. Once
 per ride per person. Stays 15 seconds, or until you dismiss it.</p>
-<p><b>The finish (A, our pick):</b> the street address of their route's end, looked up once per ride
-from OpenStreetMap (sends that one point to OpenStreetMap's server). If the lookup takes longer than
-10 seconds, the alert goes without it.</p>
+<p><b>The finish (A, our pick):</b> the street of their route's end, looked up once per ride from
+OpenStreetMap (sends that one point to OpenStreetMap's server). If the lookup takes longer than 10 seconds,
+the alert goes without it. The Karoo shows a capitals title of about 17 characters and two detail lines,
+so the text is short: "38.2 km route / to Hornsgatan 12" (round 3, after photos of the real alert).</p>
 <div class="flow">
   <div class="step"><div id="alert-a"></div><h3>With a route: length and finish</h3></div>
   <div class="step"><div id="alert-noroute"></div><h3>No route loaded: how far away</h3></div>
@@ -297,26 +298,30 @@ function statusBar(c, { battery = '100%', time = '10:24' } = {}) {
       cv.style.width = '1100px'; document.body.append(cv); } else document.getElementById(id).append(cv); };
 
   const pic = name => (THEME === 'dark' && I[name + '_dark']) || I[name];
-  // The Karoo's in-ride alert, drawn after its parts: icon, title, detail, background, text colour.
-  // Their colour's dark tone as the background (Cyan: #0B2E4A), text white, their flag in Cyan.
+  // The Karoo's in-ride alert as it really looks (photographed on our test Karoo, 2026-11-11): a dark card
+  // at the top, the title in capitals, two detail lines, the icon white on the right, a countdown bar.
   function alert(c, title, lines) {
     c.drawImage(pic('ride'), 0, 0, 480, 800);
-    const x = 12, y = 62, w = 456, h = 120 + lines.length * 40;
-    c.fillStyle = 'rgba(0,0,0,0.25)'; c.fillRect(0, 50, 480, 750);
-    c.fillStyle = '#0B2E4A'; c.beginPath(); c.roundRect(x, y, w, h, 18); c.fill();
-    // their flag (PartnerETA's glyph) in their colour
-    c.strokeStyle = '#00E5FF'; c.fillStyle = '#00E5FF'; c.lineWidth = 5; c.lineCap = 'round';
-    c.beginPath(); c.moveTo(x + 34, y + 30); c.lineTo(x + 34, y + 86); c.stroke();
-    c.beginPath(); c.moveTo(x + 34, y + 32); c.lineTo(x + 76, y + 44); c.lineTo(x + 34, y + 60); c.closePath(); c.fill();
-    c.fillStyle = '#FFFFFF'; c.font = F(600, 36); c.fillText(title, x + 98, y + 66);
-    c.font = F(400, 29); lines.forEach((l, i) => c.fillText(l, x + 98, y + 118 + i * 40));
+    const x = 15, y = 15, w = 450, h = 112 + lines.length * 50;
+    c.fillStyle = '#0B2E4A'; c.beginPath(); c.roundRect(x, y, w, h, 22); c.fill();
+    c.fillStyle = '#FFFFFF'; c.font = F(600, 30); c.fillText(title.toUpperCase(), x + 24, y + 56);
+    c.font = F(500, 38); lines.forEach((l, i) => c.fillText(l, x + 24, y + 105 + i * 50));
+    c.strokeStyle = '#FFFFFF'; c.lineWidth = 4.5; c.lineCap = 'round'; c.lineJoin = 'round';
+    const fx = x + 372, fy = y + 26 + lines.length * 12, k = 2.1;
+    c.beginPath(); c.moveTo(fx + 5 * k, fy + 21 * k); c.lineTo(fx + 5 * k, fy + 4 * k);
+    c.moveTo(fx + 5 * k, fy + 4 * k); c.bezierCurveTo(fx + 8 * k, fy + 2 * k, fx + 11 * k, fy + 2 * k, fx + 13 * k, fy + 4 * k);
+    c.bezierCurveTo(fx + 15 * k, fy + 6 * k, fx + 18 * k, fy + 6 * k, fx + 19 * k, fy + 5 * k); c.lineTo(fx + 19 * k, fy + 14 * k);
+    c.bezierCurveTo(fx + 18 * k, fy + 15 * k, fx + 15 * k, fy + 15 * k, fx + 13 * k, fy + 13 * k);
+    c.bezierCurveTo(fx + 11 * k, fy + 11 * k, fx + 8 * k, fy + 11 * k, fx + 5 * k, fy + 13 * k); c.stroke();
+    c.fillStyle = 'rgba(255,255,255,0.22)'; c.beginPath(); c.roundRect(x + 15, y + h - 29, w - 30, 16, 8); c.fill();
+    c.fillStyle = '#FFFFFF'; c.beginPath(); c.roundRect(x + 15, y + h - 29, 80, 16, 8); c.fill();
   }
-  put('alert-a', c => alert(c, 'Alex started riding', ['38.2 km route', 'Finish: Hornsgatan 12,', 'Södermalm']));
-  put('alert-noroute', c => alert(c, 'Alex started riding', ['No route loaded', '12.4 km away from you']));
+  put('alert-a', c => alert(c, 'Alex is riding', ['38.2 km route', 'to Hornsgatan 12']));
+  put('alert-noroute', c => alert(c, 'Alex is riding', ['No route loaded', '12.4 km away']));
   const form = layout([
     switchRow('distance', 'Distance left', true), help('Under their time of arrival, how far they still have to ride on their route.'), divider,
     switchRow('update', 'Start alert', true),
-    help('When you\'re riding and Alex starts, a Karoo alert with their route and where it ends. Once per ride.'), divider,
+    help('When you\'re riding and Alex starts, a Karoo alert with their route and where it ends (the street comes from OpenStreetMap). Once per ride.'), divider,
     heading('target', 'Colour'), swatches(['#00E5FF', '#00D35A', '#1E7BFF', '#FF00E6', '#8A2BE2'], 0), space(200),
   ]);
   put('settings', c => page(c, { title: 'Alex', card: null, form, scrollTo: 0 }));

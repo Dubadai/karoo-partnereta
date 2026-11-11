@@ -46,16 +46,16 @@ class StartAlertTest {
     }
 
     @Test fun text() {
-        assertEquals("38.2 km route\nFinish: Hornsgatan 12, Södermalm", StartAlert.text(38_210.0, 900.0, "Hornsgatan 12, Södermalm"))
+        assertEquals("38.2 km route\nto Hornsgatan 12", StartAlert.text(38_210.0, 900.0, "Hornsgatan 12"))
         assertEquals("38.2 km route", StartAlert.text(38_210.0, null, null))
-        assertEquals("No route loaded\n12.4 km away from you", StartAlert.text(null, 12_400.0, null))
+        assertEquals("No route loaded\n12.4 km away", StartAlert.text(null, 12_400.0, null))
         assertEquals("No route loaded", StartAlert.text(null, null, "x"))
     }
 
     @Test fun address() {
         val body = """{"address":{"house_number":"12","road":"Hornsgatan","suburb":"Södermalm","city":"Stockholm"}}"""
-        assertEquals("Hornsgatan 12, Södermalm", FinishAddress.parse(body))
-        assertEquals("Strandvägen, Stockholm", FinishAddress.parse("""{"address":{"road":"Strandvägen","city":"Stockholm"}}"""))
+        assertEquals("Hornsgatan 12", FinishAddress.parse(body))
+        assertEquals("Strandvägen", FinishAddress.parse("""{"address":{"road":"Strandvägen","city":"Stockholm"}}"""))
         assertEquals("Ytterby", FinishAddress.parse("""{"address":{"village":"Ytterby"}}"""))
         assertNull(FinishAddress.parse("""{"error":"Unable to geocode"}"""))
         assertNull(FinishAddress.parse("not json"))
