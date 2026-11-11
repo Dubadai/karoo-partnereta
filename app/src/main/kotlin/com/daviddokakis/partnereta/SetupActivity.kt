@@ -261,7 +261,7 @@ class SetupActivity : Activity() {
     private fun showExample(p: Person) {
         layout.showCard(true)
         val name = nameInput?.text?.toString()?.trim().orEmpty().ifEmpty { p.shownName }
-        val text = FieldText("$name ETA", "Partner ETA", "11:05", note = if (p.distanceLeft) "14.2 km left" else "", noteIsExtra = true)
+        val text = FieldText("$name ETA", "Partner ETA", "11:05", note = if (p.distanceLeft) "14.2 km left" else "")
         val config = ViewConfig(gridSize = 30 to 15, viewSize = QUARTER_W to QUARTER_H, textSize = 46)
         val view = FieldView.render(this, config, text).first.apply(this, FrameLayout(this))
         view.measure(View.MeasureSpec.makeMeasureSpec(QUARTER_W, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(QUARTER_H, View.MeasureSpec.EXACTLY))

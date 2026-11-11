@@ -33,20 +33,20 @@ object GalleryFields {
 
     private fun text(state: String) = if (state.startsWith("seq-")) SEQ[state.removePrefix("seq-").toInt()].let { (eta, left) ->
         if (left == null) FieldText("Alex ETA", "Partner ETA", eta, note = "arrived", noteIcon = NoteIcon.ARRIVED)
-        else FieldText("Alex ETA", "Partner ETA", eta, note = "$left km left", noteIsExtra = true)
+        else FieldText("Alex ETA", "Partner ETA", eta, note = "$left km left")
     } else when (state) {
         "notriding" -> FieldText("Alex ETA", "Partner ETA", "--:--", note = "not riding")
         "connecting" -> FieldText("Alex ETA", "Partner ETA", "--:--", note = "connecting")
         "setup" -> FieldText("PartnerETA 2", "PartnerETA 2", "--", note = "not set up")
         // No route loaded: how far away instead of an ETA.
         "away" -> FieldText("Alex", "Alex", "3.4", note = "km away")
-        "longname" -> FieldText("Alexandra-Louise ETA", "Partner ETA", "11:05", note = "14.2 km left", noteIsExtra = true)
+        "longname" -> FieldText("Alexandra-Louise ETA", "Partner ETA", "11:05", note = "14.2 km left")
         "stale" -> FieldText("Alex ETA", "Partner ETA", "11:05", note = "3 min ago", stale = true)
         "paused" -> FieldText("Alex ETA", "Partner ETA", "11:12", note = "paused", noteIcon = NoteIcon.PAUSED)
         "arrived" -> FieldText("Alex ETA", "Partner ETA", "10:21", note = "arrived", noteIcon = NoteIcon.ARRIVED)
         "offline" -> FieldText("Alex ETA", "Partner ETA", "11:05", note = "no connection", stale = true, noteIcon = NoteIcon.NO_CONNECTION)
         "offline-none" -> FieldText("Alex ETA", "Partner ETA", "--:--", note = "no connection", noteIcon = NoteIcon.NO_CONNECTION)
-        else -> FieldText("Alex ETA", "Partner ETA", "11:05", note = "14.2 km left", noteIsExtra = true)
+        else -> FieldText("Alex ETA", "Partner ETA", "11:05", note = "14.2 km left")
     }
 
 

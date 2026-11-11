@@ -40,12 +40,13 @@
             android:textSize="15sp" /> <!-- set in FieldView: 20 px capitals, 23 px from 150 px tall -->
     </LinearLayout>
 
-    <!-- The clock and the small line under it ("14.2 km left", "paused"), drawn into one image by
-         FieldView with the Karoo's own value font and rules (KarooType), so size and position match
-         the native numbers to the pixel. Design: docs/design/karoo-type.
-         fitEnd, not fitXY: on a map page with a route the Karoo shortens the row (141 → 123 px)
-         without telling us; the clock then shrinks in proportion, bottom right, instead of being
-         squashed in height (docs/design/map-squash). -->
+    <!-- The clock and the small line under it ("14.2 km left", "paused"), drawn by FieldView with
+         the Karoo's own value font and rules (KarooType), so size and position match the native
+         numbers to the pixel. Design: docs/design/karoo-type.
+         Two images: the clock takes the room that's left (fitEnd, not fitXY), the small line keeps
+         its own height. On a map page with a route the Karoo shortens the row (141 → 123 px)
+         without telling us; then only the clock shrinks, in proportion and bottom right, and the
+         small line stays at true size (docs/design/map-squash, docs/design/short-tile-note). -->
     <ImageView
         android:id="@+id/body"
         android:layout_width="match_parent"
@@ -53,4 +54,12 @@
         android:layout_weight="1"
         android:importantForAccessibility="no"
         android:scaleType="fitEnd" />
+
+    <ImageView
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:scaleType="fitEnd"
+        android:visibility="gone" />
 </LinearLayout>
