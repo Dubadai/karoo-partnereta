@@ -15,8 +15,6 @@ data class FieldText(
     val arrow: Double? = null,
     /** Grey arrow: no update for 2 min. */
     val stale: Boolean = false,
-    /** The small line is only extra ("14.2 km left"): left out on short tiles, where the clock needs the room. */
-    val noteIsExtra: Boolean = false,
     /** A small icon before the small line, in its colour. */
     val noteIcon: NoteIcon? = null,
 )
@@ -72,7 +70,7 @@ object FieldTexts {
         }
         if (state != null) return FieldText(header, short, timeOfDay(eta, is24h), note = state.first, stale = stale, noteIcon = state.second)
         val note = if (distanceLeft) distance(v.remainingM ?: 0.0).let { "${it.first} ${it.second} left" } else ""
-        return FieldText(header, short, timeOfDay(eta, is24h), note = note, noteIsExtra = true)
+        return FieldText(header, short, timeOfDay(eta, is24h), note = note)
     }
 
     private fun gap(gap: Gap, name: String, stale: Boolean, note: String?): FieldText {

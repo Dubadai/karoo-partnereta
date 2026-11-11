@@ -271,9 +271,8 @@ class PartnerTrackerTest {
             assertEquals("Robin", it.header); assertEquals("3.4", it.value); assertEquals("", it.unit); assertEquals("km away", it.note)
         }
         // The km line is extra (left out on short tiles); state words are not, and carry their icon.
-        assertTrue(FieldTexts.eta(v, "Robin", now, true).noteIsExtra)
         FieldTexts.eta(v.copy(paused = true), "Robin", now, true).let {
-            assertEquals("paused", it.note); assertEquals(NoteIcon.PAUSED, it.noteIcon); assertTrue(!it.noteIsExtra); assertTrue(!it.stale)
+            assertEquals("paused", it.note); assertEquals(NoteIcon.PAUSED, it.noteIcon); assertTrue(!it.stale)
         }
         FieldTexts.eta(v.copy(paused = true, arrived = true), "Robin", now, true).let { assertEquals("arrived", it.note); assertEquals(NoteIcon.ARRIVED, it.noteIcon) }
         FieldTexts.eta(v.copy(offline = true), "Robin", now, true).let {

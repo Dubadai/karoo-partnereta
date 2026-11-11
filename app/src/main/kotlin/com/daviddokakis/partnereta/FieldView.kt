@@ -67,14 +67,22 @@ object FieldView {
             else -> R.drawable.ic_partners_behind
         })
 
-        // The small line only on tiles tall enough for it (a normal 6-row tile is ~66 dp).
-        // Short tiles (75 dp: a full-width row, a small half) leave out the km line (design:
-        // docs/design/field-states B) but keep words that matter: paused, no connection, 3 min ago.
-        val noteFits = h / density >= if (t.noteIsExtra) EXTRA_NOTE_MIN_HEIGHT_DP else NOTE_MIN_HEIGHT_DP
-        val showNote = noteFits && t.note.isNotEmpty()
+        // The small line on every tile from ~60 dp up (a one-row tile is 75 dp); the clock gives way
+        // to it, never the other way round (smallest-text rule; docs/design/short-tile-note).
+        val showNote = h / density >= NOTE_MIN_HEIGHT_DP && t.note.isNotEmpty()
         val top = headerBottom.roundToInt().coerceIn(0, h - 1)
-        val (body, valueSp) = drawBody(context, config, t, showNote, top)
-        v.setImageViewBitmap(R.id.body, body)
+        val (body, valueSp, split) = drawBody(context, config, t, showNote, top)
+        // The small line as its own image under the clock, so a row the Karoo shortens shrinks only
+        // the clock (fitEnd) and the line keeps its true size.
+        if (split != null) {
+            val cut = (split - top).coerceIn(1, body.height - 1)
+            v.setImageViewBitmap(R.id.body, Bitmap.createBitmap(body, 0, 0, body.width, cut).apply { this.density = body.density })
+            v.setImageViewBitmap(R.id.note, Bitmap.createBitmap(body, 0, cut, body.width, body.height - cut).apply { this.density = body.density })
+            v.setViewVisibility(R.id.note, android.view.View.VISIBLE)
+        } else {
+            v.setImageViewBitmap(R.id.body, body)
+            v.setViewVisibility(R.id.note, android.view.View.GONE)
+        }
         v.setContentDescription(R.id.body, if (showNote) "${t.value} ${t.unit} ${t.note}" else "${t.value} ${t.unit}")
         return v to Drawn(short, showNote, valueSp)
     }
@@ -93,7 +101,7 @@ object FieldView {
      * Karoo's value line (tile − 35 px) with its baseline 14 px above the bottom; with the small line
      * it fills the space from 6 px under the header down to 6 px above the line.
      */
-    private fun drawBody(context: Context, config: ViewConfig, t: FieldText, showNote: Boolean, top: Int): Pair<Bitmap, Float> {
+    private fun drawBody(context: Context, config: ViewConfig, t: FieldText, showNote: Boolean, top: Int): Triple<Bitmap, Float, Int?> {
         val density = context.resources.displayMetrics.density
         val (w, h) = config.viewSize
         val colour = context.getColor(if (t.stale) R.color.text_secondary else R.color.text)
@@ -106,7 +114,7 @@ object FieldView {
         if (t.value.none { it.isDigit() }) {
             val words = t.note.replaceFirstChar { it.uppercase() }.ifEmpty { "--" }
             c.drawText(words, w / 2f, KarooType.emptyBaseline(h), KarooType.emptyPaint(words, w).apply { color = colour })
-            return bmp to 0f
+            return Triple(bmp, 0f, null)
         }
         val value = KarooType.valueText(t.value)
         val vp = KarooType.valuePaint().apply { color = colour; textAlign = Paint.Align.LEFT }
@@ -175,6 +183,7 @@ object FieldView {
             c.drawText(t.unit, vx + size * UNIT_GAP, clockBaseline, vp)
         }
 
+        var split: Int? = null
         if (showNote) {
             val icon = when (t.noteIcon) {
                 NoteIcon.PAUSED -> R.drawable.ic_paused
@@ -193,15 +202,17 @@ object FieldView {
                 ViewConfig.Alignment.CENTER -> (w - noteW) / 2f
                 else -> w - VALUE_SIDE_PX - noteW
             }
+            // Cap height to baseline, like the words next to it.
+            val iconTop = ((noteCapTop + noteBaseline) / 2f - iconPx / 2f).roundToInt()
+            // Where the line's image starts: just above its capitals (or its icon), under the clock's ink.
+            split = (minOf(noteCapTop, if (icon != 0) iconTop.toFloat() else noteCapTop) - 1f).toInt()
             if (icon != 0) context.getDrawable(icon)?.mutate()?.let { d ->
-                // Cap height to baseline, like the words next to it.
-                val iconTop = ((noteCapTop + noteBaseline) / 2f - iconPx / 2f).roundToInt()
                 d.setBounds(nx.roundToInt(), iconTop, nx.roundToInt() + iconPx, iconTop + iconPx)
                 d.setTint(colour); d.draw(c)
             }
             drawNote(note, nx + iconPx + gapPx, noteBaseline)
         }
-        return bmp to size / density
+        return Triple(bmp, size / density, split)
     }
 
     /** The flag [px] square, from the shared library (KarooType.drawFlag): sized to the Karoo's icon box, with its states. */
@@ -278,9 +289,6 @@ object FieldView {
     private const val NOTE_MARGIN_DP = 4f
     // Fonts as in field_partner.xml (on the Karoo "sans-serif" is Plex Medium).
     private const val HEADER_FONT = "ibm-plex-sans-condensed"
-    private const val NOTE_FONT = "sans-serif-medium"
-    /** Below this tile height the extra line would squeeze the value. */
+    /** Below this tile height the small line would squeeze the clock too much. */
     private const val NOTE_MIN_HEIGHT_DP = 60f
-    /** Below this tile height an extra small line ("14.2 km left") is left out. */
-    private const val EXTRA_NOTE_MIN_HEIGHT_DP = 80f
 }
