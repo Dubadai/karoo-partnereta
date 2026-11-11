@@ -136,7 +136,10 @@ class SettingsLayout(
             addView(title, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
             addView(cardHolder, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
             addView(form, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+            // settingsChoiceCards' ring hangs 4 dp into the form's side margin: draw it, don't cut it
+            clipChildren = false
         }
+        (form as? android.view.ViewGroup)?.apply { clipChildren = false; clipToPadding = false }
         scroll.addView(content, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         cardHolder.setPadding(dp(12), dp(4), dp(12), dp(4))
         // A page without a field to show (a list of people or fields) has no card.

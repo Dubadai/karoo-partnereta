@@ -8,6 +8,8 @@ The code and resources every DDB Karoo 3 app shares, so they look and behave the
   `karoo-starter/docs/design/settings-kit/README.md`), with its colours, `ic_settings_*` icons and
   `bg_*` shapes.
 - `UpdateCheck` + `UpdateActivity`: the "Update available" notice.
+- `FieldPacer`: paces a field's redraw loop (sleeps until the state or page changes, no polling).
+- `streamDataFlow` / `consumerFlow` (KarooFlows.kt): Karoo events and streams as flows.
 
 Package `com.dubadai.karoo.common`. The source of truth is this folder in the workspace; each app
 has a copy at `<app>/karoo-common/` with `KIT_VERSION` in the app root.

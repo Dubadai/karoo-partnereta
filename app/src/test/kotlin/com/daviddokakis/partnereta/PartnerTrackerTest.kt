@@ -56,6 +56,7 @@ class PartnerTrackerTest {
         assertEquals("AbCd1234", PartnerFeed.codeFrom("https://dashboard.hammerhead.io/live/AbCd1234"))
         assertEquals("AbCd1234", PartnerFeed.codeFrom("…/live/AbCd1234"))
         assertEquals("AbCd1234", PartnerFeed.codeFrom(" AbCd1234 "))
+        assertEquals("AbCd1234", PartnerFeed.codeFrom("live/AbCd1234")) // the box shows "live/"; some type it again
         assertNull(PartnerFeed.codeFrom("hello world"))
     }
 

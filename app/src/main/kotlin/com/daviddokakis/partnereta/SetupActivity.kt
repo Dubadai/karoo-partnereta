@@ -164,7 +164,7 @@ class SetupActivity : Activity() {
     // ---- One person ------------------------------------------------------------------------
 
     /** The stored link as the field shows it. */
-    private fun shownLink(p: Person) = p.code?.let { "…/live/$it" }.orEmpty()
+    private fun shownLink(p: Person) = p.code.orEmpty()   // the box shows "live/" itself; only the code is typed
 
     /** Move a view that lives across re-renders into the form. */
     private fun <V : View> keep(v: V): V { (v.parent as? LinearLayout)?.removeView(v); form.addView(v); return v }
@@ -189,12 +189,15 @@ class SetupActivity : Activity() {
             getString(R.string.setup_link), shownLink(p),
             getString(R.string.setup_link_hint),
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI,
+            // Riders can't paste on the Karoo: "live/" is fixed in the box, they type only the code
+            // after it (docs/design/link-code, option A).
+            prefix = "live/",
+            intro = getString(R.string.setup_link_help),
         ) {
             linkInput = this
             imeOptions = EditorInfo.IME_ACTION_DONE
             setOnEditorActionListener { _, _, _ -> save(); true }
         })
-        form.addView(settingsHelp(getString(R.string.setup_link_help)))
         // The link check's line, right above Save, so it shows where the rider just tapped.
         status = keep(status ?: LinearLayout(this).apply { orientation = LinearLayout.VERTICAL })
         saveButton = keep(saveButton ?: settingsButton(SettingsButton.MAIN, getString(R.string.setup_save)) { save() })
@@ -205,45 +208,48 @@ class SetupActivity : Activity() {
         form.addView(settingsSwitchRow(R.drawable.ic_settings_distance, getString(R.string.setting_distance_left), p.distanceLeft) { on ->
             update { it.copy(distanceLeft = on) }
         })
-        form.addView(settingsHelp(getString(R.string.setting_distance_left_help) + " " + getString(R.string.setting_same_route_help)))
+        form.addView(settingsIntro(getString(R.string.setting_distance_left_help) + " " + getString(R.string.setting_same_route_help)))
         form.addView(settingsDivider())
 
         // Their map
         val style = MapStyle.byKey(p.colour)
         form.addView(settingsHeading(R.drawable.ic_settings_target, getString(R.string.setting_colour)))
+        form.addView(settingsIntro(getString(R.string.map_recommend)))
         form.addView(settingsSwatchRow(MapStyle.all.map { it.line to it.key }, style.key) { key -> update { it.copy(colour = key) } })
         val note = when (style.key) { "cyan" -> getString(R.string.colour_standard); in MapStyle.recommended -> getString(R.string.colour_recommended); else -> "" }
-        form.addView(settingsHelp((if (note.isEmpty()) style.label else "${style.label} · $note") + ". " + getString(R.string.map_recommend)))
+        // Under the swatches only the picked colour's name; what the setting does is above them.
+        form.addView(settingsHelp(if (note.isEmpty()) style.label else "${style.label} · $note"))
         form.addView(settingsDivider())
 
         form.addView(settingsHeading(R.drawable.ic_settings_marker, getString(R.string.setting_marker)))
+        form.addView(settingsIntro(getString(R.string.setting_marker_help)))
         form.addView(settingsSegmented(listOf(getString(R.string.marker_circle) to true, getString(R.string.marker_arrow) to false), p.circleMarker) { on ->
             update { it.copy(circleMarker = on) }
         })
-        form.addView(settingsHelp(getString(R.string.setting_marker_help)))
         form.addView(settingsDivider())
 
         // Their route: Show / Hide. Hidden, "On your route" has nothing to mark, so it goes too.
         form.addView(settingsHeading(R.drawable.ic_settings_flag, getString(R.string.setting_route)))
+        // One text for Show and Hide, so nothing above the choices jumps when they're tapped.
+        form.addView(settingsIntro(getString(R.string.setting_route_help)))
         form.addView(settingsSegmented(listOf(getString(R.string.route_show) to true, getString(R.string.route_hide) to false), p.showRoute) { on ->
             update { it.copy(showRoute = on) }
         })
-        form.addView(settingsHelp(getString(if (p.showRoute) R.string.setting_route_help else R.string.setting_route_hidden_help)))
         form.addView(settingsDivider())
 
         if (p.showRoute) {
             form.addView(settingsHeading(R.drawable.ic_settings_lap, getString(R.string.setting_shared)))
+            form.addView(settingsIntro(getString(R.string.setting_shared_help)))
             form.addView(settingsSegmented(listOf(getString(R.string.shared_arrows) to false, getString(R.string.shared_dots) to true), p.sharedDots) { on ->
                 update { it.copy(sharedDots = on) }
             })
-            form.addView(settingsHelp(getString(R.string.setting_shared_help)))
             form.addView(settingsDivider())
         }
 
         form.addView(settingsSwitchRow(R.drawable.ic_settings_clock, getString(R.string.setting_history), p.showHistory) { on ->
             update { it.copy(showHistory = on) }
         })
-        form.addView(settingsHelp(getString(R.string.setting_history_help)))
+        form.addView(settingsIntro(getString(R.string.setting_history_help)))
         form.addView(settingsPicture(mapPreview(p, style), getString(R.string.map_preview_description)))
 
         if (!isNew) {
@@ -284,7 +290,7 @@ class SetupActivity : Activity() {
     private fun save() {
         val p = person ?: return
         val name = nameInput?.text?.toString().orEmpty().trim()
-        // Keep the stored code when the field still shows it ("…/live/CODE").
+        // The code typed after "live/" (a whole link typed in still works).
         val typed = linkInput?.text?.toString().orEmpty()
         val code = PartnerFeed.codeFrom(typed)
         if (code == null) {

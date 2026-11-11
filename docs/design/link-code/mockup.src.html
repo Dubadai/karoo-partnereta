@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PartnerETA Link Code</title>
+<style>
+@font-face { font-family: Plex; src: url(__FONT_REG__); font-weight: 400; }
+@font-face { font-family: Plex; src: url(__FONT_MED__); font-weight: 500; }
+@font-face { font-family: Plex; src: url(__FONT_SEMI__); font-weight: 600; }
+@font-face { font-family: Plex; src: url(__FONT_BOLD__); font-weight: 700; }
+:root { --bg:#f3f5f6; --fg:#1b2026; --muted:#5d6670; --line:#d5dbe0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#15181b; --fg:#e8ecef; --muted:#9ca6b0; --line:#30363c; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg:#15181b; --fg:#e8ecef; --muted:#9ca6b0; --line:#30363c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 -apple-system, system-ui, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1 { font-size: 28px; margin: 0 0 6px; text-wrap: balance; } h2 { font-size: 19px; margin: 0; }
+p { color: var(--muted); max-width: 72ch; margin: 0; }
+section { display: grid; gap: 12px; }
+.flow { display:flex; flex-wrap:wrap; gap: 18px; } .step { flex: 0 1 240px; max-width: 240px; min-width: 0; }
+.step canvas { display:block; max-width:100%; height:auto; } .step h3 { font-size: 14px; font-weight: 600; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>PartnerETA: type only the live link's code</h1>
+<p>Riders can't paste on the Karoo, so typing a whole link (dashboard.hammerhead.io/live/AbCd1234) is a chore. Ask only for the code at the end. The explanation goes above the box, before you type (our settings rule). A whole link still works if someone types it. The code here is made up.</p>
+</header>
+<section>
+<h2>A · “live/” fixed in the box, type after it</h2>
+<p>Looks like the end of the link, so it's clear what goes there. Needs a small kit addition (a fixed start text in <code>settingsInput</code>), done in karoo-common first.</p>
+<div class="flow">
+  <div class="step"><div id="a-empty"></div><h3>Empty</h3></div>
+  <div class="step"><div id="a-typed"></div><h3>Typed, link checked</h3></div>
+</div>
+</section>
+<section>
+<h2>B · A box for the code, the example link above it</h2>
+<p>Only the app changes (the kit's box as it is).</p>
+<div class="flow">
+  <div class="step"><div id="b-empty"></div><h3>Empty</h3></div>
+  <div class="step"><div id="b-typed"></div><h3>Typed, link checked</h3></div>
+</div>
+</section>
+<section>
+<h2>Today</h2>
+<div class="flow"><div class="step"><div id="today"></div><h3>“Paste their Karoo live link”</h3></div></div>
+</section>
+</main>
+<script>
+/*__KAROO_DEVICE_JS__*/
+const IMGS = "__IMGS__";
+const ICONS = "__ICONS__";
+const FRAME_PNG = '__FRAME__';
+const HASH = new URLSearchParams(location.hash.slice(1));
+const SHOT = HASH.get('shot'), THEME = HASH.get('theme') || 'light';
+const FRAME = +(HASH.get('frame') || 0), FRAMES = +(HASH.get('frames') || 1);
+const W = SHOT ? 1100 : 240;
+const BACKDROP = THEME === 'dark' ? 'linear-gradient(#120E0B,#3F342E)' : 'linear-gradient(#7E9CB4,#F1F4F6)';   // Night / Sky
+/*__KIT_JS__*/
+(async () => {
+  await Promise.all([400, 500, 600, 700].map(w => document.fonts.load(`${w} 20px Plex`)));
+  const I = {}; for (const k of Object.keys(IMGS)) I[k] = await loadImg(IMGS[k]);
+  const dev = await KarooDevice.load({ frame: FRAME_PNG, screen: IMGS.status });
+  const put = (id, draw) => { if (SHOT && id !== SHOT) return;
+    const t = FRAMES > 1 ? FRAME / (FRAMES - 1) : 0;
+    const cv = dev.device(dev.screen({ draw: c => draw(c, t) }), W);
+    if (SHOT) { document.body.innerHTML = ''; document.body.style.cssText = `margin:0;background:${BACKDROP};width:1300px;height:2000px;display:flex;align-items:center;justify-content:center`;
+      cv.style.width = '1100px'; document.body.append(cv); } else document.getElementById(id).append(cv); };
+
+  // The kit's input box (label, box) with an optional fixed start text and a hint (grey) or typed value.
+  const box = (label, { prefix = '', value = '', hint = '' } = {}) => ({ h: 160, draw(c, y) {
+    c.fillStyle = C.help; c.font = F(500, 14 * D); c.fillText(label, X0, y + 42);
+    c.strokeStyle = C.input; c.lineWidth = 3.75; c.beginPath(); c.roundRect(X0 + 2, y + 62, XW - 4, 82, 20); c.stroke();
+    c.font = F(400, 17 * D); let x = X0 + 24;
+    if (prefix) { c.fillStyle = C.help; c.fillText(prefix, x, y + 116); x += c.measureText(prefix).width; }
+    c.fillStyle = value ? C.text : C.help; c.fillText(value || hint, x, y + 116);
+    if (value) { const cx = x + c.measureText(value).width + 2; c.fillStyle = C.text; c.fillRect(cx, y + 86, 3, 40); }   // the cursor
+  } });
+  // The label sits above the intro here: label, what to type, then the box.
+  const labelOnly = t => ({ h: 56, draw(c, y) { c.fillStyle = C.help; c.font = F(500, 14 * D); c.fillText(t, X0, y + 42); } });
+  const boxNoLabel = o => { const b = box('', o); return { h: 104, draw(c, y) { b.draw(c, y - 56); } }; };
+  const name = input('Name', 'Alex');
+  const ok = status('Link works · not riding now', '#129A5E');
+  const save = button('yellow', 'Save');
+  const A = typed => layout([name, labelOnly('Live link'),
+    intro('Type the end of their Karoo live link, after live/. Capital letters matter.'),
+    boxNoLabel({ prefix: 'live/', value: typed ? 'AbCd1234' : '', hint: 'AbCd1234' }),
+    ...(typed ? [ok] : [space(20)]), save]);
+  const B = typed => layout([name, labelOnly('Live link code'),
+    intro('Type the code at the end of their Karoo live link, after live/ (…/live/AbCd1234). Capital letters matter.'),
+    boxNoLabel({ value: typed ? 'AbCd1234' : '', hint: 'e.g. AbCd1234' }),
+    ...(typed ? [ok] : [space(20)]), save]);
+  const today = layout([name, box('Live link', { hint: 'Paste their Karoo live link' }),
+    help('From their Karoo live tracking share (dashboard.hammerhead.io/live/…). They show on your map while they ride.'), save]);
+  const field = I.field;
+  const card = field ? { img: field, w: Math.round(206 * field.width / field.height), h: 206 } : null;
+  put('a-empty', c => page(c, { title: 'Add person', card, form: A(false), scrollTo: 0 }));
+  put('a-typed', c => page(c, { title: 'Add person', card, form: A(true), scrollTo: 0 }));
+  put('b-empty', c => page(c, { title: 'Add person', card, form: B(false), scrollTo: 0 }));
+  put('b-typed', c => page(c, { title: 'Add person', card, form: B(true), scrollTo: 0 }));
+  put('today', c => page(c, { title: 'Add person', card, form: today, scrollTo: 0 }));
+})();
+</script>
+</body>
+</html>

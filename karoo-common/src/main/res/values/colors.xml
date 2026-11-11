@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- karoo-common: one set for every app. values-night has the dark versions. -->
-    <color name="example_card">#FFF1F1EF</color>
-    <color name="example_label">#FF6B6A66</color>
+    <color name="example_card">#FFF4F4F4</color>
+    <color name="example_label">#FF636363</color>
     <color name="example_tile">#FFFFFFFF</color>
-    <color name="example_tile_border">#FFD5D4CF</color>
+    <color name="example_tile_border">#FFDDDDDD</color>
     <!-- Settings kit (SettingsKit.kt; design: docs/design/settings-kit). One set for every app. -->
     <color name="settings_bg">#FFFFFFFF</color>
     <color name="settings_title">#FF1C2E2E</color>
-    <color name="settings_help">#FF6F6F6F</color>
+    <color name="settings_help">#FF636363</color>
     <color name="settings_divider">#FFDDDDDD</color>
     <color name="segment_track">#FFF4F4F4</color>
-    <!-- Picked option: 7:1+ against the track (design: docs/design/segment-contrast, B) -->
-    <color name="segment_selected">#FF3E5560</color>
-    <color name="segment_text">#FF243535</color>
-    <color name="segment_text_selected">#FFFFFFFF</color>
-    <color name="settings_switch_thumb_off">#FFB4B2A9</color>
-    <color name="settings_main_bg">#FFFFE600</color>
-    <color name="settings_main_text">#FF111111</color>
-    <color name="settings_add_bg">#FFC5D3DA</color>
-    <color name="settings_add_text">#FF111111</color>
-    <color name="settings_remove">#FFD0342C</color>
-    <color name="settings_input_border">#FFCFCFCF</color>
-    <color name="settings_ok">#FF2E9E4F</color>
+    <!-- Karoo native (design: docs/design/native-colours): its pill_switch, greys, yellow, red, green -->
+    <color name="segment_selected">#FF9FB3BD</color>
+    <color name="segment_text">#FF1B2D2D</color>
+    <color name="segment_text_selected">#FF1B2D2D</color>
+    <color name="settings_switch_thumb_off">#FFBCBCBC</color>
+    <!-- Picked ring (swatches, choice list): the Karoo's focus ring, k2DarkBlue -->
+    <color name="settings_ring">#FF214559</color>
+    <!-- Switch: white knob always (the knob's own shadow), track Karoo green (success_green_600) on, grey off -->
+    <!-- Choice cards: the picked ring and radio in Apple system blue (our pick, an exception to native) -->
+    <color name="settings_select_blue">#FF007AFF</color>
+    <color name="settings_switch_on">#FF0DBA75</color>
+    <color name="settings_switch_off">#FFBCBCBC</color>
+    <color name="settings_switch_thumb">#FFFFFFFF</color>
+    <color name="settings_main_bg">#FFFFE900</color>
+    <color name="settings_main_text">#FF1B2D2D</color>
+    <color name="settings_add_bg">#FF9FB3BD</color>
+    <color name="settings_add_text">#FF1B2D2D</color>
+    <color name="settings_remove">#FFD34343</color>
+    <color name="settings_input_border">#FFBCBCBC</color>
+    <color name="settings_ok">#FF007A49</color>
     <color name="settings_warn">#FFB26A00</color>
     <color name="settings_tag_text">#FFB26A00</color>
     <color name="settings_ok_bg">#FFE6F4EA</color>
