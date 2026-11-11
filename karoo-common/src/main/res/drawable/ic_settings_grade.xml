@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Grade, the Karoo's own glyph (KarooType.Glyph.GRADE), centred in a square. Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="35.679" android:viewportHeight="35.679">
+    <group android:translateX="-1.146" android:translateY="-2.621">
+        <path android:pathData="M33.97,16.974L33.97,29.92L4,29.92L4,26.93l13.986,-6.97 6.993,3.983 8.991,-6.97zM33.97,11v2.987l-8.99,6.97 -6.994,-3.983L4,23.944v-2.987l13.986,-6.97 6.993,3.983L33.97,11z" android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

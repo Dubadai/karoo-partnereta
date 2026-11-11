@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Timer (stopwatch), the Karoo's own glyph (KarooType.Glyph.TIMER), centred in a square. Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="35.554" android:viewportHeight="35.554">
+    <group android:translateX="-1.211" android:translateY="-1.156">
+        <path android:pathData="M25.353,28.26c-1.7,1.694 -3.96,2.627 -6.365,2.627 -2.404,0 -4.664,-0.933 -6.364,-2.627 -3.51,-3.497 -3.51,-9.188 0,-12.685 1.7,-1.694 3.96,-2.628 6.364,-2.628s4.665,0.934 6.365,2.628c3.51,3.497 3.51,9.188 0,12.685m3.102,-13.668l2.188,-2.18 -2.117,-2.11 -2.187,2.18c-1.742,-1.35 -3.77,-2.156 -5.854,-2.416V6.983h4.497V4H12.994v2.983h4.498v3.083c-2.552,0.319 -5.021,1.45 -6.98,3.403 -4.682,4.666 -4.682,12.23 0,16.896 2.34,2.333 5.408,3.5 8.476,3.5 3.068,0 6.136,-1.167 8.477,-3.5 4.323,-4.308 4.651,-11.086 0.99,-15.773" android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

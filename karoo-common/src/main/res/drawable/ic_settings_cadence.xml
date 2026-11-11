@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Cadence, the Karoo's own glyph (KarooType.Glyph.CADENCE), centred in a square. Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="40.729" android:viewportHeight="40.729">
+    <group android:translateX="1.258" android:translateY="1.316">
+        <path android:pathData="M36.212,4.113l-7.244,7.22c3.995,4.695 3.769,11.737 -0.676,16.165 -4.445,4.43 -11.51,4.654 -16.22,0.674l-5.833,5.812L2,33.984l8.04,-8.012C6.704,21.306 7.137,14.786 11.336,10.6c4.201,-4.187 10.742,-4.618 15.424,-1.292l5.214,-5.196h4.238zM24.607,11.455c-3.476,-2.181 -8.134,-1.763 -11.159,1.25 -3.024,3.014 -3.442,7.657 -1.255,11.121 0.351,0.556 0.77,1.083 1.255,1.567 0.239,0.238 0.487,0.458 0.745,0.665 3.531,2.817 8.716,2.595 11.987,-0.665 3.272,-3.26 3.494,-8.426 0.665,-11.946l-6.326,6.306 -0.292,0.291h-4.24L18.4,17.64z" android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

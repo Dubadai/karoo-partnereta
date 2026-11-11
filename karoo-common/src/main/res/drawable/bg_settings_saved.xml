@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit: the MAIN button just after a save (settingsFlashSaved) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/settings_ok" />
+    <corners android:radius="28dp" />
+</shape>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionInfo
+    displayName="@string/extension_name"
+    icon="@drawable/ic_app"
+    id="partnereta"
+    mapLayer="true"
+    scansDevices="false">
+
+    <!-- One field per person you follow, PartnerETA 1–4 (the Karoo needs a fixed list; each shows
+         its person's name). Slot 1 keeps the original id "partner-eta". "Alex ETA": clock time at
+         the end of their route; "Alex ahead/behind" + gap on the same road. -->
+    <DataType
+        description="@string/field_eta_description"
+        displayName="@string/field_eta_1"
+        graphical="true"
+        icon="@drawable/ic_app"
+        typeId="partner-eta" />
+    <DataType
+        description="@string/field_eta_description"
+        displayName="@string/field_eta_2"
+        graphical="true"
+        icon="@drawable/ic_app"
+        typeId="partner-eta-2" />
+    <DataType
+        description="@string/field_eta_description"
+        displayName="@string/field_eta_3"
+        graphical="true"
+        icon="@drawable/ic_app"
+        typeId="partner-eta-3" />
+    <DataType
+        description="@string/field_eta_description"
+        displayName="@string/field_eta_4"
+        graphical="true"
+        icon="@drawable/ic_app"
+        typeId="partner-eta-4" />
+</ExtensionInfo>

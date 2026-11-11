@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small direction chevrons for the thinner partner line: two thin "^" across the line, in the
+     outline colour (#FF0B3D1E). Points up = the way they ride. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="13dp" android:height="13dp"
+    android:viewportWidth="13" android:viewportHeight="13">
+    <path
+        android:pathData="M3.3,7.6 L6.5,4.7 L9.7,7.6 M3.3,10.6 L6.5,7.7 L9.7,10.6"
+        android:strokeColor="#FF0B3D1E"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="butt"
+        android:strokeLineJoin="miter"
+        android:fillColor="#00000000" />
+</vector>

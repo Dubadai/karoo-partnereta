@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit: text field -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/settings_bg" />
+    <stroke android:width="2dp" android:color="@color/settings_input_border" />
+    <corners android:radius="10dp" />
+</shape>

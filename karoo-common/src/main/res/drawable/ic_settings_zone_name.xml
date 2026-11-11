@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings heading icon (settings kit). Tinted by settingsIcon. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:strokeColor="#FF000000" android:strokeWidth="2.2" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M5,4.3h14a4,4 0,0 1,4 4v7.4a4,4 0,0 1,-4 4h-14a4,4 0,0 1,-4 -4v-7.4a4,4 0,0 1,4 -4z" />
+    <path android:fillColor="#FF000000" android:pathData="M11.6592 15.4H6.5808V14.104000000000001L9.8832 9.9952H6.744000000000001V8.699200000000001H11.5824V9.9952L8.2704 14.104000000000001H11.6592ZM15.268799999999999 15.4V14.1136H12.3216V12.8848L14.9328 8.699200000000001H16.6416V13.0H17.4864V14.1136H16.6416V15.4ZM13.4736 13.0H15.268799999999999V10.1872H15.172799999999999Z" />
+</vector>

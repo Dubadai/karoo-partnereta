@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Climb (the ClimbER mountain), the Karoo's own glyph (KarooType.Glyph.CLIMBER), centred in a square. Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="62.898" android:viewportHeight="62.898">
+    <group android:translateX="3.757" android:translateY="3.738">
+        <path android:pathData="M21.1809,37.5039L33.8665,9.9474H38.05L54.1094,45.4737H48.1715L35.8907,17.9172L23.2052,45.4737H19.0217L13.0512,31.7473L6.9665,45.4737H1.2753L4.7455,37.4302L10.1591,25.4332H15.8502L15.7688,25.6168H15.9177L21.1809,37.5039Z" android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

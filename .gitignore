@@ -1,0 +1,17 @@
+.gradle/
+build/
+build.nosync/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.kotlin/
+
+# Release signing key and its passwords: never commit these
+keystore.properties
+*.jks
+*.keystore
+
+# Field gallery artboards: big, made again by gallery.sh
+docs/design/gallery/artboard/

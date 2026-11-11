@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:icon="@drawable/ic_app"
+        android:label="@string/app_name">
+
+        <!-- Setup: partner name and live link. In the Karoo's app list. -->
+        <activity
+            android:name=".SetupActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".PartnerEtaExtension"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <!-- Lets the Karoo system discover this extension -->
+            <intent-filter>
+                <action android:name="io.hammerhead.karooext.KAROO_EXTENSION" />
+            </intent-filter>
+            <meta-data
+                android:name="io.hammerhead.karooext.EXTENSION_INFO"
+                android:resource="@xml/extension_info" />
+        </service>
+
+        <!-- manifest.json with the latest version: the Karoo's app page shows UPDATE from it,
+             and UpdateCheck reads it to tell the rider (see build.gradle.kts) -->
+        <meta-data
+            android:name="io.hammerhead.karooext.MANIFEST_URL"
+            android:value="${manifestUrl}" />
+    </application>
+</manifest>

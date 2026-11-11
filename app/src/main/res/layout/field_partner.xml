@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One PartnerETA field in the Karoo's own field style: small icon on the left, title in capitals on
+     the right (IBM Plex Sans Condensed), value large and regular weight below, sized from the
+     Karoo's ViewConfig.textSize. No background: the Karoo draws the rounded tile.
+     RemoteViews-safe widgets only. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Paddings are set in FieldView, from the Karoo's own tile lines (docs/design/eta-align).
+         The icon ends on the title's baseline, as the Karoo's icons do. -->
+    <LinearLayout
+        android:id="@+id/header_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="4dp"
+            android:baselineAlignBottom="true"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="ibm-plex-sans-condensed"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/text"
+            android:textSize="15sp" /> <!-- set in FieldView: 20 px capitals, 23 px from 150 px tall -->
+    </LinearLayout>
+
+    <!-- The clock and the small line under it ("14.2 km left", "paused"), drawn into one image by
+         FieldView with the Karoo's own value font and rules (KarooType), so size and position match
+         the native numbers to the pixel. Design: docs/design/karoo-type.
+         fitEnd, not fitXY: on a map page with a route the Karoo shortens the row (141 → 123 px)
+         without telling us; the clock then shrinks in proportion, bottom right, instead of being
+         squashed in height (docs/design/map-squash). -->
+    <ImageView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="fitEnd" />
+</LinearLayout>

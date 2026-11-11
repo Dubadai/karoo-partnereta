@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mini partner marker: a small violet dot with a navy ring, placed on your route where she will ride
+     it too. 10 dp ≈ 18 px on the Karoo (decided) (map icons scale ~1.8 px per dp): fits inside your 12-13 px yellow. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="10dp" android:height="10dp"
+    android:viewportWidth="11" android:viewportHeight="11">
+    <path android:pathData="M5.5,5.5m-4.3,0a4.3,4.3 0,1 1,8.6 0a4.3,4.3 0,1 1,-8.6 0"
+        android:fillColor="#FF8A2BE2" android:strokeColor="#FF2A0B4A" android:strokeWidth="1.8" />
+</vector>

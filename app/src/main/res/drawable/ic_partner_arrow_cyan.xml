@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Partner arrow (cyan_dark): #FF00E5FF with a #FF0B2E4A outline. Points up (north) before rotation. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp" android:height="36dp"
+    android:viewportWidth="36" android:viewportHeight="36">
+    <path
+        android:pathData="M18,3 L31,32 L18,25 L5,32 Z"
+        android:fillColor="#FF00E5FF"
+        android:strokeColor="#FF0B2E4A"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round" />
+</vector>

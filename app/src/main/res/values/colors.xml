@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light mode. values-night/colors.xml has the dark versions of the same names. -->
+    <color name="bg">#FFFFFFFF</color>
+    <color name="text">#FF0B0B0B</color>
+    <color name="text_secondary">#FF5F5E5A</color>
+    <!-- Translucent backgrounds work (they take a tint behind them). Translucent ImageView tints
+         do NOT: they render solid. Use an opaque colour plus android:alpha instead. -->
+    <color name="tile_tonal">#14000000</color>
+    <color name="accent_bg">#FF3B6D11</color>
+    <color name="accent_fg">#FFFFFFFF</color>
+    <!-- Setup screen -->
+    <!-- The Karoo's own field-icon green -->
+    <color name="karoo_green">#FF129A5E</color>
+    <!-- The Karoo's own segmented control (Settings -> Display), as in ClearWind -->
+    <color name="swatch_ring">#FF1C2E2E</color>
+    <!-- The one behind in the two-person field icon. -->
+    <color name="partner_icon_grey">#FF7A7A78</color>
+</resources>

@@ -1,0 +1,12 @@
+<!-- PartnerETA: checkered flag (the finish), with "DDB" under it: the DDB app icon family (karoo-starter/docs/design/app-icons, option A).
+     24-unit grid, stroke 2, round caps and joins, one ink colour like the Karoo's own icons. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <group android:translateX="4.2" android:scaleX="0.65" android:scaleY="0.65">
+        <path android:pathData="M5,21V3.5" android:strokeColor="@color/text" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+        <path android:pathData="M5,4h14v10H5" android:strokeColor="@color/text" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+        <path android:pathData="M5,4h3.5v5H5zM12,4h3.5v5H12zM8.5,9H12v5H8.5zM15.5,9H19v5h-3.5z" android:fillColor="@color/text" />
+    </group>
+    <path android:pathData="M5.0,17.8V22.8H5.8A2.5,2.5 0 0 0 5.8,17.8ZM10.3,17.8V22.8H11.1A2.5,2.5 0 0 0 11.1,17.8ZM15.6,17.8V22.8H17.8A1.25,1.25 0 0 0 17.8,20.3H15.6M15.6,20.3H17.5A1.25,1.25 0 0 0 17.5,17.8H15.6" android:strokeColor="@color/text" android:strokeWidth="1.2" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+</vector>

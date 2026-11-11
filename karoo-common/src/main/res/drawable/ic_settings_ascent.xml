@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Ascent, the Karoo's own glyph (KarooType.Glyph.ASCENT), centred in a square. Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="35.679" android:viewportHeight="35.679">
+    <group android:translateX="-1.146" android:translateY="0.057">
+        <path android:pathData="M33.9703,18.9742L33.9703,31.9185L4,31.9185L4,28.9314L17.9862,21.9613L24.9793,25.9443L33.9703,18.9742ZM28.9019,8.1416L28.9019,11.1287L4,23.2486L4,20.2613L28.9019,8.1416ZM33.0385,7.6397l-11.2016,-3.9937l-0.8652,2.6041l6.7924,2.4216l-12.4096,6.0526l1.2159,2.493l12.4056,-6.0506l-2.1771,7.1376l4.1113,-2.9426z" android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

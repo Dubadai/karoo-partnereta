@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Partner arrow on the map: pointing up (north before rotation), white outline. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp" android:height="36dp"
+    android:viewportWidth="36" android:viewportHeight="36">
+    <path
+        android:pathData="M18,3 L31,32 L18,25 L5,32 Z"
+        android:fillColor="#FF9A9A9A"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round" />
+</vector>

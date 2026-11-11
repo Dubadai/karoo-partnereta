@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="56" viewBox="0 0 760 56" role="img" aria-label="If you enjoy my work, buy me a gel (or a coffee) for my next ride: buymeacoffee.com/Dubadai">
+  <rect x="0.5" y="0.5" width="759" height="55" rx="12" fill="#FFF8D6" stroke="#F2D84A"/>
+  <g transform="translate(12 10)"><path d="M11.5 2.5 H26.5 V8 C27.5 12 27.5 26 26.5 30 V33.5 H11.5 V30 C10.5 26 10.5 12 11.5 8 Z" fill="#FFDD00" stroke="#0D0C22" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M11.5 8 H26.5 M11.5 30 H26.5" stroke="#0D0C22" stroke-width="1.2"/>
+<path d="M11.5 6 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4" fill="none" stroke="#0D0C22" stroke-width="0.9"/><path d="M11.5 32 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4 l1.5 -1.4 l1.5 1.4" fill="none" stroke="#0D0C22" stroke-width="0.9"/>
+<path d="M11.5 4.8 L14 6.2 L11.5 7.6" fill="#FFF8D6" stroke="#0D0C22" stroke-width="1" stroke-linejoin="round"/>
+<path d="M15 12 C14.6 17 14.6 22 15 26" fill="none" stroke="#0D0C22" stroke-width="1.3" stroke-linecap="round" opacity="0.8"/></g>
+  <text x="56" y="34" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#1F2328">If you enjoy my work, <tspan font-weight="600">buy me a gel</tspan> (or a coffee) for my next ride <tspan fill="#59636E">· buymeacoffee.com/Dubadai</tspan></text>
+</svg>

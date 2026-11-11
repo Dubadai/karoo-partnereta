@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- karoo-common: one set for every app. values-night has the dark versions. -->
+    <color name="example_card">#FFF1F1EF</color>
+    <color name="example_label">#FF6B6A66</color>
+    <color name="example_tile">#FFFFFFFF</color>
+    <color name="example_tile_border">#FFD5D4CF</color>
+    <!-- Settings kit (SettingsKit.kt; design: docs/design/settings-kit). One set for every app. -->
+    <color name="settings_bg">#FFFFFFFF</color>
+    <color name="settings_title">#FF1C2E2E</color>
+    <color name="settings_help">#FF6F6F6F</color>
+    <color name="settings_divider">#FFDDDDDD</color>
+    <color name="segment_track">#FFF4F4F4</color>
+    <!-- Picked option: 7:1+ against the track (design: docs/design/segment-contrast, B) -->
+    <color name="segment_selected">#FF3E5560</color>
+    <color name="segment_text">#FF243535</color>
+    <color name="segment_text_selected">#FFFFFFFF</color>
+    <color name="settings_switch_thumb_off">#FFB4B2A9</color>
+    <color name="settings_main_bg">#FFFFE600</color>
+    <color name="settings_main_text">#FF111111</color>
+    <color name="settings_add_bg">#FFC5D3DA</color>
+    <color name="settings_add_text">#FF111111</color>
+    <color name="settings_remove">#FFD0342C</color>
+    <color name="settings_input_border">#FFCFCFCF</color>
+    <color name="settings_ok">#FF2E9E4F</color>
+    <color name="settings_warn">#FFB26A00</color>
+    <color name="settings_tag_text">#FFB26A00</color>
+    <color name="settings_ok_bg">#FFE6F4EA</color>
+    <color name="settings_warn_bg">#FFFFF1DC</color>
+    <color name="settings_saved_text">#FFFFFFFF</color>
+</resources>

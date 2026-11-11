@@ -1,0 +1,53 @@
+# One source for the README (top block) and the Reddit post: edit here, then run setup/docs.sh.
+# headline: "path | alt text", light first, then dark. Text in our plain voice; no real names.
+name: PartnerETA
+apk: partnereta.apk
+intro: |
+  A Hammerhead Karoo 3 extension for following the people you ride with (up to four). Paste their
+  Karoo live tracking link once, and while they ride you see them and their route on your map, plus
+  a data field each:
+  when they'll reach the end of their route, or how far ahead or behind they are on the same road.
+headline:
+  - docs/images/partnereta-light.gif | PartnerETA on three Karoo 3s during a ride: Alex on your map, and the ETA field at half page and a quarter counting the km left down until Alex arrives
+  - docs/images/partnereta-dark.jpg | The same in dark mode, at one moment of the ride
+features:
+  - **On your map:** each person as a circle or arrow in their own colour, their route (or hide it
+      and keep just the marker and finish flag), and arrows (or dots) where they'll ride your route too.
+  - **ETA field:** the clock time they'll reach the end of their route, with the distance left.
+      On the same route it shows the gap instead: `Alex ahead` / `Alex behind`.
+  - **States:** paused, arrived, last update a few minutes ago, or no connection, drawn the
+      Karoo's way (its own value font; a grey flag when there's no news).
+  - **Setup page** (open **DDB PartnerETA** from the Karoo's app list): the people you follow,
+      **+ Add person**, and per person their name, live link (checked right away), map colour,
+      marker, route and ride history.
+  - **Update notices** on the Karoo when a new release is out.
+more: |
+  More in the [rider guide](docs/guide/README.md). Problems or ideas:
+  [Issues](https://github.com/Dubadai/karoo-partnereta/issues).
+
+  Data comes from the live link's feed (`/v1/shares/tracking/<code>`, unofficial, no login), fetched
+  every 30 s through the Karoo's own connection (Wi-Fi or the phone).
+
+  Building it yourself or making a release: see [docs/DEVELOPING.md](docs/DEVELOPING.md).
+install:
+  - On your phone, open the [latest release](https://github.com/Dubadai/karoo-partnereta/releases/latest)
+      and share `partnereta.apk` to the **Hammerhead Companion** app (or with a computer: `adb install partnereta.apk`).
+  - Open **DDB PartnerETA** from the app list, tap **+ Add person** and paste their live-tracking link.
+  - In a ride profile, add **DDB PartnerETA → PartnerETA 1** (one per person) to a page.
+reddit:
+  title: |
+    PartnerETA: see your riding partner on your Karoo map
+  body: |
+    My partner and I often ride the same day but not together, and I wanted to know where they were without pulling out my phone. PartnerETA puts your partner on your Karoo's map.
+
+    You paste their Karoo live tracking link once. While they ride, you see where they are and the route they're on. There's also one data field that shows when they'll get to the end of their route, or how far ahead or behind they are if you're on the same road.
+
+    - Your partner's position and route on your map
+    - ETA field, or the gap between you on a shared road
+    - Works with the Karoo's own live tracking link, so you don't need another account
+    - Pick the colour for your partner on the map
+  get: |
+    Free and open source. Download `partnereta.apk` from the latest release, sideload it, open DDB PartnerETA and paste the link.
+  closing: It's been tested on our two Karoos so far, so I'd love to hear how it works for others.
+versions:
+

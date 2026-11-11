@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Direction chevrons in the Karoo's own route style: two thin "^" stacked across the full width of
+     the line, in the outline colour (#FF000000). Points up = the way they ride. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp" android:height="16dp"
+    android:viewportWidth="16" android:viewportHeight="16">
+    <path
+        android:pathData="M2,9 L8,3.5 L14,9 M2,13.5 L8,8 L14,13.5"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"
+        android:fillColor="#00000000" />
+</vector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mini partner arrow on your route where she will ride it too, pointing her way: her arrow,
+     a tiny bit larger than first tried: 12 dp ≈ 22 px (decided). Points up before rotation. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="12dp" android:height="12dp"
+    android:viewportWidth="14" android:viewportHeight="14">
+    <path android:pathData="M7,1.5 L12,12 L7,9.5 L2,12 Z"
+        android:fillColor="#FFB6FF00" android:strokeColor="#FF1E4A00" android:strokeWidth="1.8" android:strokeLineJoin="round" />
+</vector>

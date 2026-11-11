@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit heading icon: Clock / time, the Karoo's own glyph (KarooType.Glyph). Tinted by the kit. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="38" android:viewportHeight="38">
+    <path android:pathData="M18.986,4c8.278,0 14.988,6.687 14.988,14.936 0,8.25 -6.71,14.935 -14.988,14.935C10.71,33.871 4,27.185 4,18.936S10.709,4 18.986,4zM18.986,6.992c-6.62,0 -11.985,5.347 -11.985,11.944s5.365,11.945 11.985,11.945c6.62,0 11.987,-5.348 11.987,-11.945S25.606,6.992 18.986,6.992zM20.486,9.975v7.965h4.493v2.987h-7.494L17.485,17.94h0.003L17.488,9.975h2.998z" android:fillColor="#FFFFFFFF" />
+</vector>

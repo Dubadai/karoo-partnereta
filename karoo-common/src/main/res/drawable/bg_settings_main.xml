@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit: the page's one main action, Karoo yellow -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/settings_main_bg" />
+    <corners android:radius="28dp" />
+</shape>

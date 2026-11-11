@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Arrived: a chequered finish flag, next to "arrived" in the field (tinted to the text colour in code). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp" android:height="16dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path
+        android:pathData="M5,21V3"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M6.5,4H20V14H6.5Z"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1.6"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M6.5,4H11V9H6.5Z M15.5,4H20V9H15.5Z M11,9H15.5V14H11Z"
+        android:fillColor="#FF000000" />
+</vector>

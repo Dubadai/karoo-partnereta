@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Where the partner's route ends (blue): a finish pin like the Karoo's own (teardrop with a
+     checkered disc), in her colour. Same size at every zoom, like yours. The pin sits in the top
+     half of the icon so its tip is at the icon's centre, the point on the map. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="25dp" android:height="65dp"
+    android:viewportWidth="40" android:viewportHeight="104">
+    <path android:pathData="M20,52 C14,40 3,32 3,20 A17,17 0,1 1,37 20 C37,32 26,40 20,52 Z"
+        android:fillColor="#FF1E7BFF" android:strokeColor="#FF0A2A5C" android:strokeWidth="2.5" android:strokeLineJoin="round" />
+    <path android:pathData="M20,20m-11,0a11,11 0,1 1,22 0a11,11 0,1 1,-22 0" android:fillColor="#FFFFFFFF" />
+    <group>
+        <clip-path android:pathData="M20,20m-11,0a11,11 0,1 1,22 0a11,11 0,1 1,-22 0" />
+        <path android:fillColor="#FF0A2A5C" android:pathData="
+            M9,9h5.5v5.5h-5.5z M20,9h5.5v5.5h-5.5z
+            M14.5,14.5h5.5v5.5h-5.5z M25.5,14.5h5.5v5.5h-5.5z
+            M9,20h5.5v5.5h-5.5z M20,20h5.5v5.5h-5.5z
+            M14.5,25.5h5.5v5.5h-5.5z M25.5,25.5h5.5v5.5h-5.5z" />
+    </group>
+    <path android:pathData="M20,20m-11,0a11,11 0,1 1,22 0a11,11 0,1 1,-22 0" android:fillColor="#00000000"
+        android:strokeColor="#FF0A2A5C" android:strokeWidth="1.5" />
+</vector>

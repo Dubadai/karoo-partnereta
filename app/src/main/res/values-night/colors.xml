@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FF0B0B0B</color>
+    <color name="text">#FFFFFFFF</color>
+    <color name="text_secondary">#FFB4B2A9</color>
+    <color name="tile_tonal">#1FFFFFFF</color>
+    <color name="accent_bg">#FF97C459</color>
+    <color name="accent_fg">#FF173404</color>
+    <!-- The Karoo's own field-icon green -->
+    <color name="karoo_green">#FF1DB872</color>
+    <color name="swatch_ring">#FFFFFFFF</color>
+    <!-- The one behind in the two-person field icon. -->
+    <color name="partner_icon_grey">#FF7A7A78</color>
+</resources>

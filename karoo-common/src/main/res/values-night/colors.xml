@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="example_card">#FF1D1D1D</color>
+    <color name="example_label">#FFA3A29C</color>
+    <color name="example_tile">#FF000000</color>
+    <color name="example_tile_border">#FF3A3A3A</color>
+    <!-- Settings kit (SettingsKit.kt) -->
+    <color name="settings_bg">#FF000000</color>
+    <color name="settings_title">#FFF2F2F2</color>
+    <color name="settings_help">#FFB4B2A9</color>
+    <color name="settings_divider">#FF3A3A38</color>
+    <color name="segment_track">#FF2A2A2A</color>
+    <color name="segment_selected">#FFC5D3DA</color>
+    <color name="segment_text">#FFF2F2F2</color>
+    <color name="segment_text_selected">#FF0B0B0B</color>
+    <color name="settings_switch_thumb_off">#FFFFFFFF</color>
+    <color name="settings_main_bg">#FFFFE600</color>
+    <color name="settings_main_text">#FF111111</color>
+    <color name="settings_add_bg">#FF34444C</color>
+    <color name="settings_add_text">#FFF2F2F2</color>
+    <color name="settings_remove">#FFFF6B5E</color>
+    <color name="settings_input_border">#FF4A4A48</color>
+    <color name="settings_ok">#FF4CC777</color>
+    <color name="settings_warn">#FFF0A63A</color>
+    <color name="settings_tag_text">#FFF0A63A</color>
+    <color name="settings_ok_bg">#FF13261A</color>
+    <color name="settings_warn_bg">#FF2B2010</color>
+    <color name="settings_saved_text">#FF0B0B0B</color>
+</resources>
