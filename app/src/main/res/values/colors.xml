@@ -16,4 +16,12 @@
     <color name="swatch_ring">#FF1C2E2E</color>
     <!-- The one behind in the two-person field icon. -->
     <color name="partner_icon_grey">#FF7A7A78</color>
+    <!-- Start alert (InRideAlert): each colour's dark map tone behind white text, same in light and dark. -->
+    <color name="alert_bg_cyan">#FF0B2E4A</color>
+    <color name="alert_bg_green">#FF0B3D1E</color>
+    <color name="alert_bg_blue">#FF0A2A5C</color>
+    <color name="alert_bg_magenta">#FF3A0035</color>
+    <color name="alert_bg_violet">#FF2A0B4A</color>
+    <color name="alert_bg_lime">#FF1E4A00</color>
+    <color name="alert_text">#FFFFFFFF</color>
 </resources>

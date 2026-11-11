@@ -7,5 +7,9 @@
             android:name=".FieldGalleryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Start alert at the desk: adb shell am broadcast -a com.daviddokakis.partnereta.DEBUG_ALERT ... (DebugAlertReceiver) -->
+        <receiver android:name=".DebugAlertReceiver" android:exported="true">
+            <intent-filter><action android:name="com.daviddokakis.partnereta.DEBUG_ALERT" /></intent-filter>
+        </receiver>
     </application>
 </manifest>

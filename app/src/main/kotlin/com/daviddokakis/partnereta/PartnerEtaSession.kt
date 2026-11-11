@@ -6,6 +6,7 @@ import io.hammerhead.karooext.KarooSystemService
 import io.hammerhead.karooext.models.DataType
 import io.hammerhead.karooext.models.OnLocationChanged
 import io.hammerhead.karooext.models.OnNavigationState
+import io.hammerhead.karooext.models.RideState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -48,6 +49,9 @@ class PartnerEtaSession(private val context: Context, private val karoo: KarooSy
     /** Fetches in a row that got no answer at all (no internet, phone link down). */
     private var failedInARow = 0
     private val fetchNow = Channel<Unit>(Channel.CONFLATED)
+    /** Your ride is recording (paused counts): the start alert only comes during your ride. */
+    private var recording = false
+    private val startAlert = StartAlertRule()
 
     private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
         scope.launch {
@@ -72,6 +76,12 @@ class PartnerEtaSession(private val context: Context, private val karoo: KarooSy
                 tracker.onMyLocation(myPos!!, loc.orientation, now)
                 if (slot == 1) RideLog.me(context, now, myPos!!, mySpeed, loc.orientation) // debug builds only
             }
+        }
+        scope.launch {
+            karoo.consumerFlow<RideState>().collect { recording = it !is RideState.Idle }
+        }
+        scope.launch {
+            StartAlert.debugFire.collect { s -> if (s == slot) person?.let { StartAlert.send(context, karoo, it, _view.value) } }
         }
         scope.launch {
             karoo.streamDataFlow(DataType.Type.SPEED).collect { s -> mySpeed = s.single() }
@@ -113,6 +123,10 @@ class PartnerEtaSession(private val context: Context, private val karoo: KarooSy
         // Two failed fetches in a row (30-60 s): say so, rather than "not riding" or just old values.
         val v = tracker.view(now, code != null || sim(), mySpeed)
         _view.value = if (failedInARow >= OFFLINE_AFTER_FAILURES) v.copy(offline = true) else v
+        if (startAlert.update(recording, v.status)) {
+            val p = person
+            if (p != null && p.startAlert) scope.launch { StartAlert.send(context, karoo, p, _view.value) }
+        }
         if (slot == 1) RideLog.view(context, now, _view.value, myPos, myRoute) // debug builds only
         tracker.routeMatch?.let { if (it != loggedMatch) { loggedMatch = it; if (slot == 1) RideLog.route(context, now, it) } }
     }

@@ -208,6 +208,12 @@ class SetupActivity : Activity() {
         form.addView(settingsHelp(getString(R.string.setting_distance_left_help) + " " + getString(R.string.setting_same_route_help)))
         form.addView(settingsDivider())
 
+        form.addView(settingsSwitchRow(R.drawable.ic_settings_update, getString(R.string.setting_start_alert), p.startAlert) { on ->
+            update { it.copy(startAlert = on) }
+        })
+        form.addView(settingsHelp(getString(R.string.setting_start_alert_help, p.shownName)))
+        form.addView(settingsDivider())
+
         // Their map
         val style = MapStyle.byKey(p.colour)
         form.addView(settingsHeading(R.drawable.ic_settings_target, getString(R.string.setting_colour)))

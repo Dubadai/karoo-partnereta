@@ -29,6 +29,8 @@ data class Person(
     val showHistory: Boolean = false,
     val showRoute: Boolean = true,
     val distanceLeft: Boolean = true,
+    /** A Karoo alert when they start riding during your ride (docs/design/start-alert). */
+    val startAlert: Boolean = true,
 ) {
     /** What the fields call them; "Partner" until a name is set. */
     val shownName get() = name.trim().ifEmpty { "Partner" }
@@ -81,6 +83,7 @@ object People {
             put("history", JsonPrimitive(p.showHistory))
             put("route", JsonPrimitive(p.showRoute))
             put("left", JsonPrimitive(p.distanceLeft))
+            put("alert", JsonPrimitive(p.startAlert))
         })
     }).toString()
 
@@ -103,6 +106,7 @@ object People {
                 showHistory = bool("history", false),
                 showRoute = bool("route", true),
                 distanceLeft = bool("left", true),
+                startAlert = bool("alert", true),
             )
         }.distinctBy { it.slot }.sortedBy { it.slot }
     }.getOrDefault(emptyList())

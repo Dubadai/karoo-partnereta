@@ -39,6 +39,9 @@
     <string name="setting_shared_help">Where they will ride your route too. Arrows show which way they ride; dots are optional.</string>
     <string name="setting_distance_left">Distance left</string>
     <string name="setting_distance_left_help">Under their time of arrival, how far they still have to ride on their route.</string>
+    <string name="setting_start_alert">Start alert</string>
+    <string name="setting_start_alert_help">When you\'re riding and %1$s starts, a Karoo alert with their route and where it ends (the street comes from OpenStreetMap). Once per ride.</string>
+    <string name="alert_started">%1$s started riding</string>
     <string name="setting_same_route_help">On the same route as you, the field shows how far ahead or behind they are, with their ETA under it.</string>
     <string name="setting_history">Ride history</string>
     <string name="history_off">Off</string>
