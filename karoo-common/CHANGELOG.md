@@ -1,5 +1,17 @@
 # karoo-common changelog
 
+## 1.9.0 (2026-11-12)
+
+Kit first: pieces apps built for themselves, now in the kit (mock: `docs/design/kit-candidates`).
+- `settingsCheckRow(text, checked) { on -> }`: a checkbox row. Not ticked: the radio's grey ring as a
+  rounded square; ticked: Apple blue with a white tick. 48 dp tap target, a checkbox to TalkBack.
+- `settingsChoiceCards(…, below = { value -> view or null })`: a view under an option's title (e.g. zone
+  colours), instead of reaching into the card after it's built. Looks the same.
+- Settings icons from apps: `ic_settings_calories`, `ic_settings_left_tile`, `ic_settings_right_tile`,
+  `ic_settings_wind`.
+- Apps drop their own `KarooFlows.kt` (the kit's `KarooFlows.kt` has the same helpers) and app copies of
+  kit icons: `setup/kit-migrations/1.9.0.sh`, run by `kit-rollout.sh`.
+
 ## 1.8.7 (2026-11-12)
 
 - `View.centreOnCaps(title: TextView)` is public: an app that draws its own icon next to a title
