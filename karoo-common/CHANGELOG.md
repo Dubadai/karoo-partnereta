@@ -1,5 +1,17 @@
 # karoo-common changelog
 
+## 1.8.6 (2026-11-12)
+
+- `settingsChoiceCards`: the picked radio is Apple's: a solid blue disc (the ring's outer size, 22 dp)
+  with a white dot (7.5 dp). Options not picked keep the thin grey ring. Mock round 2 and emulator
+  shots: `docs/design/apple-radio/`. Mock kit: `choiceCards(opts, sel, { radio: 'apple-picked' })`.
+
+## 1.8.5 (2026-11-12)
+
+- `settingsChoiceCards`: the blue ring's corners are concentric with the card's. The ring sits 4 dp
+  outside a 20 dp card, so its outer corners are 24 dp (stroke middle 22.5 dp); it had 20 dp and
+  looked tighter than the card. Mock kit `choiceCards` matches. Shots: `docs/design/choice-cards/ring-corners-*`.
+
 ## 1.8.4 (2026-11-12)
 
 - Icons centre on their title's capital letters, not on the title's text box. The box has font room

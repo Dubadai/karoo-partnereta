@@ -674,7 +674,7 @@ fun <T> Context.settingsRankList(
 /**
  * One choice from a list too long for [settingsSegmented] (kit 1.7.0, from UpAhead): a card per option
  * with its [title], an optional short [line] under it in the help colour, and a radio at the right. The
- * picked card gets a 3 dp ring in Apple system blue 4 dp outside it and a filled radio (our pick: with the
+ * picked card gets a 3 dp ring in Apple system blue 4 dp outside it (corners concentric with the card's) and Apple's picked radio, a blue disc with a white dot (our pick: with the
  * green switch, the one exception to Karoo-native colours). The ring's room is kept on every card, so
  * nothing moves on a tap; the ring hangs 4 dp into the page's side margin so the cards line up with the
  * page's other cards ([SettingsLayout] lets it draw there; a form nested in its own ViewGroup needs
@@ -690,7 +690,9 @@ fun <T> Context.settingsChoiceCards(options: List<Triple<String, String?, T>>, s
         val picked = value == selected
         val ring = android.widget.FrameLayout(context).apply {
             setPadding(px(4), px(4), px(4), px(4))
-            if (picked) background = android.graphics.drawable.GradientDrawable().apply { cornerRadius = px(20).toFloat(); setStroke(px(3), blue) }
+            // Concentric with the card (kit 1.8.5): the ring's outer edge is 4 dp out, so its corners are
+            // 20 + 4 = 24 dp; the stroke's middle line, which cornerRadius sets, is 1.5 dp in: 22.5 dp.
+            if (picked) background = android.graphics.drawable.GradientDrawable().apply { cornerRadius = 22.5f * resources.displayMetrics.density; setStroke(px(3), blue) }
             isClickable = true
             isSelected = picked
             contentDescription = if (line == null) title else "$title. $line"
@@ -720,17 +722,25 @@ fun <T> Context.settingsChoiceList(options: List<Pair<String, T>>, selected: T, 
     settingsChoiceCards(options.map { (name, value) -> Triple(name, null, value) }, selected, onPick)
 
 /** The radio of a [settingsChoiceCards] card: a ring, filled with a blue dot when picked. */
+/**
+ * The radio on a choice card. Not picked: a thin grey ring. Picked (kit 1.8.6, Apple's radio): a solid
+ * blue disc, as wide as the ring, with a white dot in the middle.
+ */
 private class ChoiceRadio(context: Context, private val picked: Boolean) : View(context) {
-    private val blue = context.getColor(R.color.settings_select_blue)
+    private val dp = context.resources.displayMetrics.density
     private val ring = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
         style = android.graphics.Paint.Style.STROKE
-        strokeWidth = 2f * context.resources.displayMetrics.density
-        color = if (picked) blue else context.getColor(R.color.settings_switch_thumb_off)
+        strokeWidth = 2f * dp
+        color = context.getColor(R.color.settings_switch_thumb_off)
     }
-    private val dot = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply { color = blue }
+    private val disc = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply { color = context.getColor(R.color.settings_select_blue) }
+    private val dot = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply { color = context.getColor(R.color.settings_switch_thumb) }
     override fun onDraw(c: android.graphics.Canvas) {
         val r = minOf(width, height) / 2f
-        c.drawCircle(width / 2f, height / 2f, r - ring.strokeWidth, ring)
-        if (picked) c.drawCircle(width / 2f, height / 2f, r * 0.45f, dot)
+        val x = width / 2f; val y = height / 2f
+        if (picked) {
+            c.drawCircle(x, y, r - ring.strokeWidth / 2f, disc)   // the ring's outer edge: same size
+            c.drawCircle(x, y, 3.75f * dp, dot)
+        } else c.drawCircle(x, y, r - ring.strokeWidth, ring)
     }
 }
