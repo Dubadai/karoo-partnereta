@@ -1,5 +1,11 @@
 # karoo-common changelog
 
+## 1.9.1 (2026-11-12)
+
+- `SettingsLayout`: the back button is the whole left of the bar, 96 dp wide and the bar's full height
+  (was the 48 dp square around the arrow: easy to miss with gloves). The arrow doesn't move; nothing
+  looks different. On the Karoo 3: 180 × 105 px instead of 90 × 90.
+
 ## 1.9.0 (2026-11-12)
 
 Kit first: pieces apps built for themselves, now in the kit (mock: `docs/design/kit-candidates`).
