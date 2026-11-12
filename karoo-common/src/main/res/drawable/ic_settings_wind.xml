@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings kit icon: wind (ClearWind's), tinted by settingsIcon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="21" android:viewportHeight="21">
+    <path
+        android:pathData="M3,9H13A2.5,2.5 0,1 0,10.5 6.5M3,12.5H16.5A2.5,2.5 0,1 0,14 10M3,16H14A2.5,2.5 0,1 1,11.5 18.5"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+</vector>

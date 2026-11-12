@@ -1,5 +1,7 @@
 package com.daviddokakis.partnereta
 
+import com.dubadai.karoo.common.*
+
 import android.content.Context
 import android.content.SharedPreferences
 import io.hammerhead.karooext.KarooSystemService

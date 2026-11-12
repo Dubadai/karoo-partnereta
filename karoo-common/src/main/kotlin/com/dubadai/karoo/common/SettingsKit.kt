@@ -680,8 +680,15 @@ fun <T> Context.settingsRankList(
  * nothing moves on a tap; the ring hangs 4 dp into the page's side margin so the cards line up with the
  * page's other cards ([SettingsLayout] lets it draw there; a form nested in its own ViewGroup needs
  * clipChildren = false and clipToPadding = false on it too). The whole card is the tap target.
+ * [below] (kit 1.9.0, from BetterIntervals): an optional view under an option's title and line, e.g. its
+ * zone colours; null for options without one.
  */
-fun <T> Context.settingsChoiceCards(options: List<Triple<String, String?, T>>, selected: T, onPick: (T) -> Unit): LinearLayout = LinearLayout(this).apply {
+fun <T> Context.settingsChoiceCards(
+    options: List<Triple<String, String?, T>>,
+    selected: T,
+    below: ((T) -> View?)? = null,
+    onPick: (T) -> Unit,
+): LinearLayout = LinearLayout(this).apply {
     orientation = LinearLayout.VERTICAL
     clipChildren = false; clipToPadding = false
     // room under the last card before a divider or the next heading
@@ -709,6 +716,9 @@ fun <T> Context.settingsChoiceCards(options: List<Triple<String, String?, T>>, s
                 orientation = LinearLayout.VERTICAL
                 addView(label(title, 16f, R.color.settings_title, if (picked) 600 else 500))
                 if (line != null) addView(label(line, 13f, R.color.settings_help).apply { setPadding(0, px(2), 0, 0) })
+                below?.invoke(value)?.let { v ->
+                    addView(v, LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply { topMargin = px(8); bottomMargin = px(2) })
+                }
             }
             addView(texts, LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f))
             addView(ChoiceRadio(context, picked), LinearLayout.LayoutParams(px(24), px(24)))
@@ -720,9 +730,58 @@ fun <T> Context.settingsChoiceCards(options: List<Triple<String, String?, T>>, s
 
 /** Kit 1.4.0's list, now drawn as [settingsChoiceCards] without lines (kept so apps calling it keep working). */
 fun <T> Context.settingsChoiceList(options: List<Pair<String, T>>, selected: T, onPick: (T) -> Unit): LinearLayout =
-    settingsChoiceCards(options.map { (name, value) -> Triple(name, null, value) }, selected, onPick)
+    settingsChoiceCards(options.map { (name, value) -> Triple(name, null, value) }, selected, onPick = onPick)
 
-/** The radio of a [settingsChoiceCards] card: a ring, filled with a blue dot when picked. */
+/**
+ * A checkbox row (kit 1.9.0, from BetterIntervals): a 22 dp rounded square and its text (16 sp). Not
+ * ticked: the grey ring of the choice cards' radio; ticked: Apple blue with a white tick, like the
+ * picked radio. The whole row (48 dp tall) is the tap target; it reads as a checkbox to TalkBack.
+ * Mock: docs/design/kit-candidates.
+ */
+fun Context.settingsCheckRow(text: String, checked: Boolean, onChange: (Boolean) -> Unit): LinearLayout = LinearLayout(this).apply {
+    orientation = LinearLayout.HORIZONTAL
+    gravity = Gravity.CENTER_VERTICAL
+    minimumHeight = px(48)
+    isClickable = true
+    var on = checked
+    val box = CheckBoxSquare(context).apply { this.on = on }
+    addView(box, LinearLayout.LayoutParams(px(22), px(22)).apply { marginStart = px(2); marginEnd = px(12) })
+    addView(label(text, 16f, R.color.settings_title), LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f))
+    contentDescription = text
+    accessibilityDelegate = object : View.AccessibilityDelegate() {
+        override fun onInitializeAccessibilityNodeInfo(host: View, info: android.view.accessibility.AccessibilityNodeInfo) {
+            super.onInitializeAccessibilityNodeInfo(host, info)
+            info.className = android.widget.CheckBox::class.java.name
+            info.isCheckable = true; info.isChecked = on
+        }
+    }
+    setOnClickListener { on = !on; box.on = on; box.invalidate(); onChange(on) }
+}
+
+private class CheckBoxSquare(context: Context) : View(context) {
+    var on = false
+    private val dp = context.resources.displayMetrics.density
+    private val ring = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+        style = android.graphics.Paint.Style.STROKE; strokeWidth = 2f * dp; color = context.getColor(R.color.settings_switch_thumb_off)
+    }
+    private val fill = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply { color = context.getColor(R.color.settings_select_blue) }
+    private val tick = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+        style = android.graphics.Paint.Style.STROKE; strokeWidth = 2.5f * dp; color = context.getColor(R.color.settings_switch_thumb)
+        strokeCap = android.graphics.Paint.Cap.ROUND; strokeJoin = android.graphics.Paint.Join.ROUND
+    }
+    override fun onDraw(c: android.graphics.Canvas) {
+        val w = width.toFloat(); val h = height.toFloat()
+        if (on) {
+            c.drawRoundRect(0f, 0f, w, h, 6 * dp, 6 * dp, fill)
+            val p = android.graphics.Path().apply { moveTo(6 * dp, h / 2); lineTo(10 * dp, h / 2 + 4 * dp); lineTo(16.5f * dp, h / 2 - 4.5f * dp) }
+            c.drawPath(p, tick)
+        } else {
+            val i = ring.strokeWidth / 2 + dp / 2
+            c.drawRoundRect(i, i, w - i, h - i, 5 * dp, 5 * dp, ring)
+        }
+    }
+}
+
 /**
  * The radio on a choice card. Not picked: a thin grey ring. Picked (kit 1.8.6, Apple's radio): a solid
  * blue disc, as wide as the ring, with a white dot in the middle.
