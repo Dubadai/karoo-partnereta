@@ -1,5 +1,13 @@
 # karoo-common changelog
 
+## 1.8.4 (2026-11-12)
+
+- Icons centre on their title's capital letters, not on the title's text box. The box has font room
+  above the letters, so a box-centred icon sat about 2 dp too high (measured on a Karoo: 3.5 px).
+  Applies to `settingsHeading` and `settingsSwitchRow`, `settingsNavRow`, `settingsInfoRow` and the
+  version row. Measured from the laid-out first line before drawing (any font or size); only the
+  icon's translationY changes, so no heights or layouts move.
+
 ## 1.8.3 (2026-11-11)
 
 - `settingsInput(…, prefix = "live/")`: fixed start text, grey and not editable, inside the box; the
