@@ -3,6 +3,7 @@ package com.dubadai.karoo.common
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.Gravity
@@ -73,6 +74,30 @@ fun Context.settingsIcon(iconRes: Int, sizeDp: Int = 20) = ImageView(this).apply
 }
 
 /**
+ * Kit 1.8.4: an icon's middle meets the middle of its title's capital letters, not of the title's text
+ * box (the box has font room above the letters, so a box-centred icon reads about 2 dp too high).
+ * Measured from the laid-out first line just before drawing, so it holds for any font, size or row;
+ * only translationY changes, never the layout.
+ */
+private fun View.centreOnCaps(title: TextView) {
+    val caps = Rect()
+    val icon = IntArray(2)
+    val text = IntArray(2)
+    viewTreeObserver.addOnPreDrawListener {
+        val line = title.layout ?: return@addOnPreDrawListener true
+        if (title.text.isEmpty() || height == 0) return@addOnPreDrawListener true
+        title.paint.getTextBounds("H", 0, 1, caps)
+        getLocationInWindow(icon)
+        title.getLocationInWindow(text)
+        val capsMiddle = text[1] + title.totalPaddingTop + line.getLineBaseline(0) + (caps.top + caps.bottom) / 2f
+        val iconMiddle = icon[1] - translationY + height / 2f
+        val want = Math.round(capsMiddle - iconMiddle).toFloat()
+        if (want != translationY) translationY = want
+        true
+    }
+}
+
+/**
  * Our rule (kit 1.8.1): an icon sits next to its title, the first line of the text beside it, never in
  * the middle of a title + lines block. Call on a horizontal row (gravity top) with the icon and the
  * first line's TextView: whichever is shorter is moved down so their middles line up.
@@ -81,6 +106,7 @@ private fun alignToFirstLine(icon: View, iconPx: Int, first: TextView, text: Vie
     val d = (first.lineHeight - iconPx) / 2
     if (d >= 0) (icon.layoutParams as LinearLayout.LayoutParams).topMargin = d
     else (text.layoutParams as? LinearLayout.LayoutParams)?.topMargin = -d
+    icon.centreOnCaps(first)
 }
 
 /** Icon + heading, like the Karoo's own Settings headings. Every heading has its own icon. */
@@ -88,8 +114,9 @@ fun Context.settingsHeading(iconRes: Int, title: String) = LinearLayout(this).ap
     orientation = LinearLayout.HORIZONTAL
     gravity = Gravity.CENTER_VERTICAL
     setPadding(0, px(14), 0, px(10))
-    addView(settingsIcon(iconRes))
-    addView(label(title, 18f, R.color.settings_title), LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f))
+    val titleView = label(title, 18f, R.color.settings_title)
+    addView(settingsIcon(iconRes).apply { centreOnCaps(titleView) })
+    addView(titleView, LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f))
 }
 
 /** A heading with an On / Off switch at the right; the whole row toggles it. */
@@ -283,6 +310,7 @@ fun Context.settingsNavRow(iconRes: Int, title: String, status: String? = null, 
             setPadding(0, px(8), 0, px(8))
             (icon.layoutParams as LinearLayout.LayoutParams).topMargin = (titleView.lineHeight - px(20)) / 2
         }
+        icon.centreOnCaps(titleView)
         addView(
             LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
@@ -463,15 +491,17 @@ fun Context.settingsAppRows(
             gravity = Gravity.TOP
             setPadding(0, px(14), 0, px(14))
             // the icon next to the app's name (the first line), not in the middle of the three lines
+            val nameView = label(applicationInfo.loadLabel(packageManager).toString().removePrefix("DDB "), 18f, R.color.settings_title)
             addView(settingsIcon(R.drawable.ic_settings_info).apply {
-                (layoutParams as LinearLayout.LayoutParams).topMargin = (label("A", 18f, R.color.settings_title).lineHeight - px(20)) / 2
+                (layoutParams as LinearLayout.LayoutParams).topMargin = (nameView.lineHeight - px(20)) / 2
+                centreOnCaps(nameView)
             })
             addView(
                 LinearLayout(context).apply {
                     orientation = LinearLayout.VERTICAL
                     // One line each: name, version, address (long names and debug versions don't wrap).
                     fun TextView.oneLine() = apply { maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END }
-                    addView(label(applicationInfo.loadLabel(packageManager).toString().removePrefix("DDB "), 18f, R.color.settings_title).oneLine())
+                    addView(nameView.oneLine())
                     addView(label(getString(R.string.settings_version, version), 13f, R.color.settings_help).oneLine())
                     // The address shrinks (12 → 9 sp) before it's cut: "karoo-betterintervals" needs it.
                     addView(
