@@ -1,5 +1,11 @@
 # karoo-common changelog
 
+## 1.8.7 (2026-11-12)
+
+- `View.centreOnCaps(title: TextView)` is public: an app that draws its own icon next to a title
+  (e.g. a card of its own) centres the icon on the title's capital letters, like the kit's rows.
+  Nothing changes on screen.
+
 ## 1.8.6 (2026-11-12)
 
 - `settingsChoiceCards`: the picked radio is Apple's: a solid blue disc (the ring's outer size, 22 dp)
