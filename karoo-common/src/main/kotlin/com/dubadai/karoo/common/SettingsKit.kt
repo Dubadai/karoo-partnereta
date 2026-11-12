@@ -77,9 +77,10 @@ fun Context.settingsIcon(iconRes: Int, sizeDp: Int = 20) = ImageView(this).apply
  * Kit 1.8.4: an icon's middle meets the middle of its title's capital letters, not of the title's text
  * box (the box has font room above the letters, so a box-centred icon reads about 2 dp too high).
  * Measured from the laid-out first line just before drawing, so it holds for any font, size or row;
- * only translationY changes, never the layout.
+ * only translationY changes, never the layout. Public since 1.8.7: call it on an icon an app draws next
+ * to its own title (`icon.centreOnCaps(titleView)`), so app-drawn rows follow the same rule.
  */
-private fun View.centreOnCaps(title: TextView) {
+fun View.centreOnCaps(title: TextView) {
     val caps = Rect()
     val icon = IntArray(2)
     val text = IntArray(2)
