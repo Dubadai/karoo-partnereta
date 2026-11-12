@@ -116,7 +116,11 @@ class SettingsLayout(
         // The bar: back arrow left, "Settings" centred, 18 sp
         addView(
             android.widget.FrameLayout(context).apply {
-                addView(back, android.widget.FrameLayout.LayoutParams(dp(48), dp(48), Gravity.START or Gravity.CENTER_VERTICAL).apply { marginStart = dp(4) })
+                // The back button (kit 1.9.1): the whole left of the bar, 96 dp wide and the bar's full
+                // height, so a gloved tap near the arrow counts. The arrow stays where it was (centred
+                // 28 dp from the edge): the padding on the right keeps it in the first 56 dp.
+                back.setPadding(0, 0, dp(40), 0)
+                addView(back, android.widget.FrameLayout.LayoutParams(dp(96), LayoutParams.MATCH_PARENT, Gravity.START or Gravity.CENTER_VERTICAL))
                 addView(
                     TextView(context).apply {
                         text = barTitle
